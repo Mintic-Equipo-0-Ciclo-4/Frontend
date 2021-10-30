@@ -9,26 +9,22 @@ const routes = [
 		meta: {
 			requiresAuth: true,
 		},
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
+		component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
 	},
 	{
 		path: "/login",
 		name: "Login",
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "login" */ "../views/Login.vue"),
+		component: () => import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
 	},
 	{
 		path: "/signup",
 		name: "Signup",
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "signup" */ "../views/Signup.vue"),
+		component: () => import(/* webpackChunkName: "Signup" */ "../views/Signup.vue"),
+	},
+	{
+		path: "/:pathMatch(.*)*",
+		name: "PageNotFound",
+		component: () => import(/* webpackChunkName: "Page Not Found" */ "../views/PageNotFound.vue"),
 	},
 ];
 
