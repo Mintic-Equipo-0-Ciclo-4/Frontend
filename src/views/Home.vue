@@ -2,12 +2,12 @@
 	<div id="main-container">
 		<div id="title-div">
 			<button id="navbar-toggler" @click="navbarActive = !navbarActive"></button>
-			<h1 id="navbar-title">Clientes</h1>
+			<h1 id="navbar-title">{{ $router.currentRoute._value.name }}</h1>
 		</div>
 		<div id="navbar-div" :class="{ active: navbarActive }">
-			<router-link to="/products" @click="navbarActive = false">Productos</router-link>
-			<router-link to="/clients" @click="navbarActive = false">Clientes</router-link>
-			<router-link to="/providers" @click="navbarActive = false">Proveedores</router-link>
+			<router-link class="navbar-link" to="/products" @click="navbarActive = false">Productos</router-link>
+			<router-link class="navbar-link" to="/clients" @click="navbarActive = false">Clientes</router-link>
+			<router-link class="navbar-link" to="/providers" @click="navbarActive = false">Proveedores</router-link>
 		</div>
 		<div id="view-div">
 			<router-view></router-view>
@@ -39,8 +39,7 @@ export default {
 	justify-content: left;
 	align-items: center;
 
-	background-color: #6600ee;
-	/* box-shadow: 0px 5px 5px #bdbdbd; */
+	background-color: #363640;
 
 	z-index: 2;
 }
@@ -62,10 +61,8 @@ export default {
 }
 
 #navbar-div {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-content: flex-start;
+	display: grid;
+	grid-template-rows: 70px 70px 70px auto;
 
 	position: absolute;
 	top: -100%;
@@ -73,7 +70,7 @@ export default {
 	width: 100%;
 	height: calc(100% - 80px);
 
-	background-color: #adadad;
+	background-color: #363640;
 
 	transition-duration: 600ms;
 	z-index: 1;
@@ -83,5 +80,34 @@ export default {
 }
 #navbar-div a {
 	width: 80%;
+}
+.navbar-link {
+	justify-self: left;
+	align-self: flex-end;
+
+	font-size: 28px;
+	font-family: Roboto-Bold;
+	text-decoration: none;
+	text-align: left;
+	color: #ffffff;
+
+	width: 1000px;
+
+	/* margin-top: 40px; */
+	margin-left: 50px;
+}
+
+#view-div {
+	width: 100%;
+	max-width: 100%;
+	max-height: 100%;
+
+	overflow: auto;
+}
+
+@media screen and (min-width: 813px) {
+	#navbar-div {
+		width: 500px;
+	}
 }
 </style>

@@ -13,12 +13,18 @@ const routes = [
 			{
 				path: "clients",
 				alias: "/",
-				component: import(/* webpackChunkName: "Clients" */ "../views/Clients.vue"),
+				name: "Clients",
+				component: () => import(/* webpackChunkName: "Clients" */ "../views/Clients.vue"),
 			},
 			{
 				path: "providers",
-				alias: "/",
-				component: import(/* webpackChunkName: "Providers" */ "../views/Providers.vue"),
+				name: "Providers",
+				component: () => import(/* webpackChunkName: "Providers" */ "../views/Providers.vue"),
+			},
+			{
+				path: "products",
+				name: "Products",
+				component: () => import(/* webpackChunkName: "Products" */ "../views/Products.vue"),
 			},
 		],
 		component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
