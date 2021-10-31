@@ -4,7 +4,7 @@
 
 		<div id="inputs-div">
 			<TextInput v-model="username" placeholder="Username"></TextInput>
-			<TextInput v-model="password" placeholder="Password" password></TextInput>
+			<TextInput v-model="password" placeholder="Password" @keydown.enter="loginAuthUser" password></TextInput>
 		</div>
 
 		<div id="buttons-div">

@@ -9,6 +9,18 @@ const routes = [
 		meta: {
 			requiresAuth: true,
 		},
+		children: [
+			{
+				path: "clients",
+				alias: "/",
+				component: import(/* webpackChunkName: "Clients" */ "../views/Clients.vue"),
+			},
+			{
+				path: "providers",
+				alias: "/",
+				component: import(/* webpackChunkName: "Providers" */ "../views/Providers.vue"),
+			},
+		],
 		component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
 	},
 	{
