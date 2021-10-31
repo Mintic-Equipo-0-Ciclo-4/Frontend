@@ -33,7 +33,7 @@ export default {
 
 	position: absolute;
 	top: 80px;
-	left: -400px;
+	left: -100%;
 
 	width: 100%;
 	height: calc(100% - 80px);
@@ -80,6 +80,7 @@ export default {
 @media screen and (min-width: 813px) {
 	#navbar-div {
 		width: 400px;
+		left: -400px;
 		box-shadow: 5px 0px 5px #dadada;
 		background-color: #fff;
 	}

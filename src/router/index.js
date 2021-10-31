@@ -52,8 +52,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-	await store.dispatch("getUserData");
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		await store.dispatch("getUserData");
 		if (store.state.userData == null) {
 			next("/login");
 		} else {
