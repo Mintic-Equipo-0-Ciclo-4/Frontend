@@ -51,6 +51,8 @@ export default {
 #navbar-title {
 	color: #fff;
 	margin-left: 40px;
+	font-size: 22px;
+	font-family: Roboto-Light;
 }
 #navbar-toggler {
 	display: flex;
@@ -99,8 +101,10 @@ export default {
 	transform: translate(-10px, -5px) rotate(45deg);
 	width: 33px;
 }
-
-#navbar #view-div {
+#view-div {
+	display: flex;
+	justify-content: center;
+	align-content: flex-start;
 	width: 100%;
 	max-width: 100%;
 	max-height: 100%;

@@ -21,6 +21,7 @@ button {
 	font-size: 18px;
 
 	cursor: pointer;
+	font-family: Roboto;
 }
 
 button.main {
