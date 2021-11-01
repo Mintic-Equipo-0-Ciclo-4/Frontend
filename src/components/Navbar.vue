@@ -1,7 +1,7 @@
 <template>
 	<div id="navbar-div" :class="{ active }">
 		<div id="profile-div">
-			<div></div>
+			<div id="profile-image"><img src="@/assets/img/user.svg" alt="" srcset="" /></div>
 			<h1>{{ userData.nombre }}</h1>
 			<h3>{{ userData.email }}</h3>
 		</div>
@@ -49,7 +49,7 @@ export default {
 
 	background-color: #fff;
 
-	transition-duration: 600ms;
+	transition-duration: 400ms;
 	z-index: 1;
 }
 
@@ -59,13 +59,22 @@ export default {
 
 #profile-div {
 	display: grid;
-	grid-template-rows: auto 50px 35px;
+	grid-template-rows: auto 35px 35px;
 
 	width: 95%;
-	height: 160px;
+	height: 170px;
 
 	border: solid #b1b1b1;
 	border-width: 0px 0px 1px 0px;
+}
+
+#profile-image {
+	display: flex;
+	justify-content: left;
+}
+#profile-image img {
+	align-self: center;
+	height: 85px;
 }
 
 #profile-div h1 {

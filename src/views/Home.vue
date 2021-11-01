@@ -72,14 +72,6 @@ export default {
 	transition-duration: 0.5s;
 }
 
-/* #navbar-toggler img {
-	width: 100%;
-}
-
-#navbar-toggler.active {
-	transform: rotate(-90deg);
-} */
-
 #navbar-toggler span {
 	width: 40px;
 	height: 5px;
