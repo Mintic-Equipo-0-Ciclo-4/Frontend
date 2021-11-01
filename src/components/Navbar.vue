@@ -6,15 +6,15 @@
 			<h3>{{ userData.email }}</h3>
 		</div>
 		<router-link class="navbar-link" to="/products">
-			<img src="@/assets/logo.png" alt="" />
+			<img src="@/assets/img/store.svg" alt="" class="svg-image" />
 			<h1>Products</h1>
 		</router-link>
 		<router-link class="navbar-link" to="/clients">
-			<img src="@/assets/logo.png" alt="" />
+			<img src="@/assets/img/clients.svg" alt="" />
 			<h1>Clients</h1>
 		</router-link>
 		<router-link class="navbar-link" to="/providers">
-			<img src="@/assets/logo.png" alt="" />
+			<img src="@/assets/img/providers.svg" alt="" />
 			<h1>Providers</h1>
 		</router-link>
 	</div>
@@ -117,12 +117,12 @@ export default {
 	justify-self: left;
 	margin-left: 10px;
 	align-self: center;
-	width: 35px;
+	width: 32px;
 }
 .navbar-link h1 {
 	justify-self: left;
 	align-self: center;
-	margin-left: 8px;
+	margin-left: 4px;
 }
 
 @media screen and (min-width: 813px) {
@@ -137,5 +137,9 @@ export default {
 .router-link-active {
 	color: #6600eb;
 	background-color: #ece0fd;
+}
+
+.router-link-active img {
+	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(271deg) brightness(85%) contrast(121%);
 }
 </style>
