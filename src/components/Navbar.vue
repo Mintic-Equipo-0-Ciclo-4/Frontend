@@ -19,12 +19,22 @@
 				<h1>Providers</h1>
 			</router-link>
 		</div>
-		<div id="options-div"></div>
+		<span class="section-divisor" />
+		<div id="options-div">
+			<router-link class="navbar-link" to="/profile">
+				<img src="@/assets/img/settings.svg" alt="" />
+				<h1>Settings</h1>
+			</router-link>
+			<a class="navbar-link" href="login" @click="closeSession">
+				<img src="@/assets/img/logout.svg" alt="" />
+				<h1>Logout</h1>
+			</a>
+		</div>
 	</div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
 	data() {
 		return {};
@@ -32,11 +42,22 @@ export default {
 	computed: {
 		...mapState(["userData"]),
 	},
+	methods: {
+		...mapActions(["closeSession"]),
+	},
 	props: ["active"],
 };
 </script>
 
 <style scoped>
+.section-divisor {
+	margin-top: 12px;
+	height: 0px;
+	width: 95%;
+	border: solid #b1b1b1;
+	border-width: 1px 0px 0px 0px;
+}
+
 #navbar-div {
 	display: flex;
 	flex-wrap: wrap;
@@ -117,7 +138,7 @@ export default {
 	text-align: left;
 	color: #363640;
 
-	margin-top: 10px;
+	margin-top: 5px;
 	border-radius: 4px;
 
 	transition-duration: 200ms;
@@ -136,13 +157,14 @@ export default {
 }
 
 #options-div {
-	margin-top: 15px;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	justify-content: center;
+	margin-top: 2px;
 
-	width: 95%;
+	width: 100%;
 	height: 200px;
-
-	border: solid #b1b1b1;
-	border-width: 1px 0px 0px 0px;
 }
 
 @media screen and (min-width: 813px) {

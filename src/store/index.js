@@ -52,5 +52,20 @@ export default createStore({
 				return { status: response.status, error: response.statusText };
 			}
 		},
+
+		async closeSession(context, payload) {
+			const response = await fetch("/api/auth", {
+				method: "DELETE",
+				credentials: "same-origin",
+			});
+
+			if (response.ok) {
+				context.commit("setUserData", undefined);
+				return { status: response.status, error: null };
+			} else {
+				console.trace("Error al cerrar sesion");
+				return { status: response.status, error: response.statusText };
+			}
+		},
 	},
 });
