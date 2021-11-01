@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<FileLoader v-model="files"></FileLoader>
-		<RectButton content="Send" id="send-file-button" main></RectButton>
+		<RectButton content="Send" id="send-file-button" @click="sendFiles" main></RectButton>
 	</div>
 </template>
 
@@ -19,12 +19,38 @@ import FileLoader from "@/components/FileLoader.vue";
 import RectButton from "@/components/RectButton.vue";
 
 export default {
-	setup() {},
 	data() {
 		return {
-			message: "Hola",
 			files: [],
 		};
+	},
+	methods: {
+		sendFiles() {
+			let reader = new FileReader();
+
+			for (let file of this.files) {
+				reader.readAsText(file, "UTF-8");
+				reader.onload = (ev) => {
+					let result = ev.target.result;
+					let json = this.toJson(result);
+				};
+			}
+		},
+		toJson(text) {
+			let array = text.split("\r").slice(0, -1);
+			let titles = array[0].split(",");
+			let json = [];
+
+			for (let i = 1; i < array.length; i++) {
+				let data = array[i].split(",");
+				let temp = {};
+				for (let j = 0; j < data.length; j++) {
+					temp[titles[j]] = data[j].replace("\n", "");
+				}
+				json.push(temp);
+			}
+			return json;
+		},
 	},
 	components: { FileLoader, RectButton },
 };
@@ -77,6 +103,7 @@ export default {
 	align-self: center;
 
 	margin-left: 20px;
+	font-family: Roboto-Light;
 }
 
 .status-div {

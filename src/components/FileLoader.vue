@@ -40,6 +40,7 @@ export default {
 			this.$emit("update:modelValue", this.files);
 		},
 		onloadFile(ev) {
+			this.files = [];
 			let loadedFiles = ev.target.files;
 			for (let file of loadedFiles) {
 				if (file.type !== "application/vnd.ms-excel") return;
