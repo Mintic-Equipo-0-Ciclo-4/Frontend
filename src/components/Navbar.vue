@@ -5,18 +5,21 @@
 			<h1>{{ userData.nombre }}</h1>
 			<h3>{{ userData.email }}</h3>
 		</div>
-		<router-link class="navbar-link" to="/products">
-			<img src="@/assets/img/store.svg" alt="" class="svg-image" />
-			<h1>Products</h1>
-		</router-link>
-		<router-link class="navbar-link" to="/clients">
-			<img src="@/assets/img/clients.svg" alt="" />
-			<h1>Clients</h1>
-		</router-link>
-		<router-link class="navbar-link" to="/providers">
-			<img src="@/assets/img/providers.svg" alt="" />
-			<h1>Providers</h1>
-		</router-link>
+		<div id="links-div">
+			<router-link class="navbar-link" to="/products">
+				<img src="@/assets/img/store.svg" alt="" class="svg-image" />
+				<h1>Products</h1>
+			</router-link>
+			<router-link class="navbar-link" to="/clients">
+				<img src="@/assets/img/clients.svg" alt="" />
+				<h1>Clients</h1>
+			</router-link>
+			<router-link class="navbar-link" to="/providers">
+				<img src="@/assets/img/providers.svg" alt="" />
+				<h1>Providers</h1>
+			</router-link>
+		</div>
+		<div id="options-div"></div>
 	</div>
 </template>
 
@@ -94,6 +97,13 @@ export default {
 	font-size: 14px;
 }
 
+#links-div {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 .navbar-link {
 	display: grid;
 	grid-template-columns: 80px auto;
@@ -101,14 +111,14 @@ export default {
 	width: 95%;
 	height: 50px;
 
-	font-size: 9px;
+	font-size: 8px;
 	font-family: Roboto;
 	text-decoration: none;
 	text-align: left;
 	color: #363640;
 
 	margin-top: 10px;
-	border-radius: 8px;
+	border-radius: 4px;
 
 	transition-duration: 200ms;
 }
@@ -122,12 +132,22 @@ export default {
 .navbar-link h1 {
 	justify-self: left;
 	align-self: center;
-	margin-left: 4px;
+	margin-left: 0px;
+}
+
+#options-div {
+	margin-top: 15px;
+
+	width: 95%;
+	height: 200px;
+
+	border: solid #b1b1b1;
+	border-width: 1px 0px 0px 0px;
 }
 
 @media screen and (min-width: 813px) {
 	#navbar-div {
-		width: 400px;
+		width: 360px;
 		left: -400px;
 		box-shadow: 5px 0px 5px #dadada;
 		background-color: #fff;
@@ -140,6 +160,6 @@ export default {
 }
 
 .router-link-active img {
-	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(271deg) brightness(85%) contrast(121%);
+	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(72%) contrast(121%);
 }
 </style>
