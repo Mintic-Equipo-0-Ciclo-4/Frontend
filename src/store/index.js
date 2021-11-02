@@ -7,6 +7,7 @@ export default createStore({
 		notification: {
 			text: "",
 			show: false,
+			error: false,
 		},
 	},
 	mutations: {
@@ -16,9 +17,10 @@ export default createStore({
 		setAuth(state, payload) {
 			state.auth = payload;
 		},
-		spawnNotification(state, { text, disposeTime }) {
+		spawnNotification(state, { text, disposeTime, error }) {
 			state.notification.text = text;
 			state.notification.show = true;
+			state.notification.error = error || false;
 			setTimeout(() => {
 				state.notification.show = false;
 			}, disposeTime || 4000);

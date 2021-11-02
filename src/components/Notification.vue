@@ -1,5 +1,5 @@
 <template>
-	<div class="notification" :class="{ showing: modelValue }">
+	<div class="notification" :class="{ showing: modelValue, error: error }">
 		<p>{{ text }}</p>
 		<RectButton content="ok" class="ok-button" @click="modelValue = false" text></RectButton>
 	</div>
@@ -38,9 +38,12 @@ export default {
 	color: white;
 	z-index: 1;
 
-	box-shadow: 0px 0px 10px #616161;
-
 	transition-duration: 0.3s;
+}
+
+/*TODO: Encontrar una mejor manera de identificar los errores*/
+.notification.error {
+	background-color: #290a0a;
 }
 
 .notification.showing {
@@ -71,17 +74,18 @@ export default {
 @media screen and (min-width: 800px) {
 	.notification {
 		left: 25px;
-		bottom: 25px;
+		bottom: -60px;
 
 		width: max-content;
 		min-width: 500px;
 
 		border-radius: 4px;
-		animation: none;
+
+		box-shadow: 0px 0px 10px #616161;
 	}
 
-	.notification.disposing {
-		animation: none;
+	.notification.showing {
+		bottom: 25px;
 	}
 }
 </style>

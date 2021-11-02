@@ -49,7 +49,7 @@ export default {
 							}
 						}
 
-						this.spawnNotification({ text: "Error al cargar los productos" });
+						this.spawnNotification({ text: "Error al cargar los productos", error: true });
 					} else {
 						this.spawnNotification({ text: "Productos cargados correctamente" });
 					}

@@ -1,7 +1,7 @@
 <template>
 	<div id="main-div">
 		<router-view />
-		<Notification :text="notification.text" v-model="notification.show"></Notification>
+		<Notification :text="notification.text" :error="notification.error" v-model="notification.show"></Notification>
 	</div>
 </template>
 
