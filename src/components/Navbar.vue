@@ -25,6 +25,10 @@
 				<img src="@/assets/img/settings.svg" alt="" />
 				<h1>Settings</h1>
 			</router-link>
+			<a class="navbar-link" href="#">
+				<img src="@/assets/img/info.svg" alt="" />
+				<h1>About</h1>
+			</a>
 			<a class="navbar-link" href="login" @click="closeSession">
 				<img src="@/assets/img/logout.svg" alt="" />
 				<h1>Logout</h1>

@@ -17,6 +17,7 @@
 <script>
 import FileLoader from "@/components/FileLoader.vue";
 import RectButton from "@/components/RectButton.vue";
+import { mapActions } from "vuex";
 
 export default {
 	data() {
@@ -30,9 +31,22 @@ export default {
 
 			for (let file of this.files) {
 				reader.readAsText(file, "UTF-8");
-				reader.onload = (ev) => {
+				reader.onload = async (ev) => {
 					let result = ev.target.result;
 					let json = this.toJson(result);
+					let response = await this.uploadProducts({ productos: json });
+					if (response.error) {
+						switch (response.status) {
+							case 401: {
+								this.$store.state.auth = false;
+								this.$router.push("login");
+								break;
+							}
+							default: {
+								console.trace("Error desconocido:", response);
+							}
+						}
+					}
 				};
 			}
 		},
@@ -51,6 +65,8 @@ export default {
 			}
 			return json;
 		},
+
+		...mapActions(["uploadProducts"]),
 	},
 	components: { FileLoader, RectButton },
 };

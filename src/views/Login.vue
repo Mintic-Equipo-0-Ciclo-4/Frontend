@@ -42,7 +42,7 @@ export default {
 						this.username.errors = ["User not found"];
 						break;
 					}
-					case 401: {
+					case 403: {
 						this.password.errors = ["Incorrect password"];
 						break;
 					}

@@ -58,9 +58,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
-		await store.dispatch("getUserData");
-		if (store.state.userData == null) {
-			next("/login");
+		// await store.dispatch("getUserData");
+		if (store.state.auth == false) {
+			let response = await store.dispatch("getUserData");
+			if (response.error) next("/login");
+			else next();
 		} else {
 			next();
 		}

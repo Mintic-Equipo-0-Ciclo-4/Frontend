@@ -1,10 +1,16 @@
 import { createStore } from "vuex";
 
 export default createStore({
-	state: {},
+	state: {
+		userData: {},
+		auth: false,
+	},
 	mutations: {
 		setUserData(state, payload) {
 			state.userData = payload;
+		},
+		setAuth(state, payload) {
+			state.auth = payload;
 		},
 	},
 	actions: {
@@ -45,6 +51,7 @@ export default createStore({
 
 			if (response.ok) {
 				const body = await response.json();
+				context.commit("setAuth", true);
 				context.commit("setUserData", body);
 				return { status: response.status, error: null };
 			} else {
@@ -60,10 +67,25 @@ export default createStore({
 			});
 
 			if (response.ok) {
+				context.commit("setAuth", false);
 				context.commit("setUserData", undefined);
 				return { status: response.status, error: null };
 			} else {
 				console.trace("Error al cerrar sesion");
+				return { status: response.status, error: response.statusText };
+			}
+		},
+
+		async uploadProducts(context, payload) {
+			const response = await fetch("/api/products", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+
+			if (response.ok) {
+				return { status: response.status, error: null };
+			} else {
 				return { status: response.status, error: response.statusText };
 			}
 		},
