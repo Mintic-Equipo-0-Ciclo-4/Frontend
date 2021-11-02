@@ -1,7 +1,7 @@
 <template>
 	<div id="navbar-div" :class="{ active }">
 		<div id="profile-div">
-			<div id="profile-image"><img src="@/assets/img/user.svg" alt="" srcset="" /></div>
+			<div id="profile-image"><img src="@/assets/img/user.svg" /></div>
 			<h1>{{ userData.nombre }}</h1>
 			<h3>{{ userData.email }}</h3>
 		</div>

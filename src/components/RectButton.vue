@@ -1,10 +1,10 @@
 <template>
-	<button :class="{ main: main != undefined }">{{ content }}</button>
+	<button :class="{ main: main != undefined, text: text != undefined }">{{ content }}</button>
 </template>
 
 <script>
 export default {
-	props: ["content", "main"],
+	props: ["content", "main", "text"],
 };
 </script>
 
@@ -22,6 +22,8 @@ button {
 
 	cursor: pointer;
 	font-family: Roboto;
+
+	border-radius: 5px;
 }
 
 button.main {
@@ -30,5 +32,16 @@ button.main {
 
 	background-color: #6600ee;
 	color: #fff;
+}
+
+button.text {
+	border: none;
+	outline: none;
+
+	transition-duration: 150ms;
+}
+
+button.text:hover {
+	background-color: #f3e9ff;
 }
 </style>

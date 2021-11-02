@@ -4,6 +4,20 @@
 	</div>
 </template>
 
+<script>
+export default {
+	setup() {
+		let vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty("--vh", `${vh}px`);
+
+		window.addEventListener("resize", () => {
+			let vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty("--vh", `${vh}px`);
+		});
+	},
+};
+</script>
+
 <style>
 @font-face {
 	font-family: "Nunito";
@@ -51,6 +65,7 @@
 
 	width: 100vw;
 	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 
 	background: #e9e9e9;
 }

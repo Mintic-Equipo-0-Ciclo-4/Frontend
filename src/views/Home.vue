@@ -43,7 +43,8 @@ export default {
 	justify-content: left;
 	align-items: center;
 
-	background-color: #363640;
+	background-color: #6600ee;
+	/* background-color: #363640; */
 
 	z-index: 2;
 }

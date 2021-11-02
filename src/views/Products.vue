@@ -12,17 +12,22 @@
 		<FileLoader v-model="files"></FileLoader>
 		<RectButton content="Send" id="send-file-button" @click="sendFiles" main></RectButton>
 	</div>
+	<!-- <Dialog v-model="showDialog" v-if="showDialog" :title="dialogTitle" :content="dialogContent"></Dialog> -->
 </template>
 
 <script>
 import FileLoader from "@/components/FileLoader.vue";
 import RectButton from "@/components/RectButton.vue";
+import Dialog from "@/components/Dialog.vue";
 import { mapActions } from "vuex";
 
 export default {
 	data() {
 		return {
 			files: [],
+			showDialog: false,
+			dialogTitle: "Mostrar ubicacion",
+			dialogContent: "Estas deacuerdo con que nosotros accedamos a tu ubicacion en tiempo real?",
 		};
 	},
 	methods: {
@@ -66,9 +71,13 @@ export default {
 			return json;
 		},
 
+		spawnDialog() {
+			this.showDialog = true;
+		},
+
 		...mapActions(["uploadProducts"]),
 	},
-	components: { FileLoader, RectButton },
+	components: { FileLoader, RectButton, Dialog },
 };
 </script>
 
