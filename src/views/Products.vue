@@ -18,16 +18,13 @@
 <script>
 import FileLoader from "@/components/FileLoader.vue";
 import RectButton from "@/components/RectButton.vue";
-import Dialog from "@/components/Dialog.vue";
-import { mapActions } from "vuex";
+import Notification from "@/components/Notification.vue";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
 	data() {
 		return {
 			files: [],
-			showDialog: false,
-			dialogTitle: "Mostrar ubicacion",
-			dialogContent: "Estas deacuerdo con que nosotros accedamos a tu ubicacion en tiempo real?",
 		};
 	},
 	methods: {
@@ -51,6 +48,10 @@ export default {
 								console.trace("Error desconocido:", response);
 							}
 						}
+
+						this.spawnNotification({ text: "Error al cargar los productos" });
+					} else {
+						this.spawnNotification({ text: "Productos cargados correctamente" });
 					}
 				};
 			}
@@ -70,14 +71,10 @@ export default {
 			}
 			return json;
 		},
-
-		spawnDialog() {
-			this.showDialog = true;
-		},
-
 		...mapActions(["uploadProducts"]),
+		...mapMutations(["spawnNotification"]),
 	},
-	components: { FileLoader, RectButton, Dialog },
+	components: { FileLoader, RectButton, Notification },
 };
 </script>
 

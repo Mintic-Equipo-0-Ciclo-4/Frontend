@@ -40,8 +40,4 @@ button.text {
 
 	transition-duration: 150ms;
 }
-
-button.text:hover {
-	background-color: #f3e9ff;
-}
 </style>

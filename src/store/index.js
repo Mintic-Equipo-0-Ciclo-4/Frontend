@@ -4,6 +4,10 @@ export default createStore({
 	state: {
 		userData: {},
 		auth: false,
+		notification: {
+			text: "",
+			show: false,
+		},
 	},
 	mutations: {
 		setUserData(state, payload) {
@@ -11,6 +15,13 @@ export default createStore({
 		},
 		setAuth(state, payload) {
 			state.auth = payload;
+		},
+		spawnNotification(state, { text, disposeTime }) {
+			state.notification.text = text;
+			state.notification.show = true;
+			setTimeout(() => {
+				state.notification.show = false;
+			}, disposeTime || 4000);
 		},
 	},
 	actions: {
