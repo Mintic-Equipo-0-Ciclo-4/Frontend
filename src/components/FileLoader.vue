@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
 	props: ["modelValue"],
 	data() {
@@ -43,7 +44,10 @@ export default {
 			this.files = [];
 			let loadedFiles = ev.target.files;
 			for (let file of loadedFiles) {
-				if (file.type !== "application/vnd.ms-excel") return;
+				if (file.type !== "application/vnd.ms-excel") {
+					this.spawnNotification({ text: "Solo se admiten archivos CSV" });
+					return;
+				}
 				this.files.push(file);
 			}
 			this.$emit("update:modelValue", this.files);
@@ -52,6 +56,7 @@ export default {
 			this.dragOver = true;
 			ev.preventDefault();
 		},
+		...mapMutations(["spawnNotification"]),
 	},
 };
 </script>

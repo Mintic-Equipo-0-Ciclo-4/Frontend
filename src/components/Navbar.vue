@@ -26,6 +26,8 @@
 				<img src="@/assets/img/reports.svg" alt="" />
 				<h1>Reports</h1>
 			</router-link>
+
+			<!-- <DropMenu :items="reportsItems" parentRoute="reports"></DropMenu> -->
 		</div>
 		<span class="section-divisor" />
 		<div id="options-div">
@@ -46,10 +48,29 @@
 </template>
 
 <script>
+import DropMenu from "@/components/DropMenu.vue";
 import { mapActions, mapState } from "vuex";
 export default {
 	data() {
-		return {};
+		return {
+			reportsItems: [
+				{
+					name: "Productos",
+					route: "reports/test",
+					image: "info",
+				},
+				{
+					name: "Clientes",
+					route: "reports/test",
+					image: "info",
+				},
+				{
+					name: "Usuarios",
+					route: "reports/test",
+					image: "info",
+				},
+			],
+		};
 	},
 	computed: {
 		...mapState(["userData"]),
@@ -58,6 +79,7 @@ export default {
 		...mapActions(["closeSession"]),
 	},
 	props: ["active"],
+	components: { DropMenu },
 };
 </script>
 
@@ -87,6 +109,8 @@ export default {
 
 	transition-duration: 400ms;
 	z-index: 1;
+
+	overflow-y: auto;
 }
 
 #navbar-div.active {

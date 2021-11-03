@@ -118,7 +118,7 @@ export default {
 
 	margin-bottom: 15px;
 
-	animation: 180ms linear spawnFile;
+	animation: 270ms linear spawnFile;
 	overflow: hidden;
 }
 
@@ -171,6 +171,9 @@ export default {
 	}
 	50% {
 		height: 50px;
+		opacity: 0;
+	}
+	75% {
 		opacity: 0;
 	}
 	100% {
