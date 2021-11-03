@@ -1,28 +1,28 @@
 <template>
-	<div id="navbar-div" :class="{ active }">
+	<div id="navbar-div" :class="{ active: modelValue }">
 		<div id="profile-div">
 			<div id="profile-image"><img src="@/assets/img/user.svg" /></div>
 			<h1>{{ userData.nombre }}</h1>
 			<h3>{{ userData.email }}</h3>
 		</div>
 		<div id="links-div">
-			<router-link class="navbar-link" to="/products">
+			<router-link class="navbar-link" to="/products" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/store.svg" alt="" class="svg-image" />
 				<h1>Products</h1>
 			</router-link>
-			<router-link class="navbar-link" to="/clients">
+			<router-link class="navbar-link" to="/clients" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/clients.svg" alt="" />
 				<h1>Clients</h1>
 			</router-link>
-			<router-link class="navbar-link" to="/providers">
+			<router-link class="navbar-link" to="/providers" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/providers.svg" alt="" />
 				<h1>Providers</h1>
 			</router-link>
-			<router-link class="navbar-link" to="/sales">
+			<router-link class="navbar-link" to="/sales" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/sales.svg" alt="" />
 				<h1>Sales</h1>
 			</router-link>
-			<router-link class="navbar-link" to="/reports">
+			<router-link class="navbar-link" to="/reports" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/reports.svg" alt="" />
 				<h1>Reports</h1>
 			</router-link>
@@ -31,7 +31,7 @@
 		</div>
 		<span class="section-divisor" />
 		<div id="options-div">
-			<router-link class="navbar-link" to="/profile">
+			<router-link class="navbar-link" to="/profile" @click="if (isMobile) modelValue = false;">
 				<img src="@/assets/img/settings.svg" alt="" />
 				<h1>Settings</h1>
 			</router-link>
@@ -50,7 +50,26 @@
 <script>
 import DropMenu from "@/components/DropMenu.vue";
 import { mapActions, mapState } from "vuex";
+import { onMounted, onUnmounted, ref } from "@vue/runtime-core";
 export default {
+	setup() {
+		const windowSize = ref(window.innerWidth);
+
+		onMounted(() => {
+			window.addEventListener("resize", () => {
+				windowSize.value = window.innerWidth;
+			});
+		});
+
+		onUnmounted(() => {
+			window.removeEventListener("resize", () => {
+				windowSize.value = window.innerWidth;
+			});
+		});
+
+		return { windowSize };
+	},
+	props: ["modelValue"],
 	data() {
 		return {
 			reportsItems: [
@@ -74,11 +93,18 @@ export default {
 	},
 	computed: {
 		...mapState(["userData"]),
+		isMobile() {
+			return this.windowSize < 816;
+		},
 	},
 	methods: {
 		...mapActions(["closeSession"]),
 	},
-	props: ["active"],
+	watch: {
+		modelValue() {
+			this.$emit("update:modelValue", this.modelValue);
+		},
+	},
 	components: { DropMenu },
 };
 </script>

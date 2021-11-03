@@ -10,7 +10,7 @@
 			</button>
 			<h1 id="navbar-title">{{ $router.currentRoute._value.name }}</h1>
 		</div>
-		<Navbar :active="navbarActive"></Navbar>
+		<Navbar v-model="navbarActive"></Navbar>
 		<div id="view-div" @click="navbarActive = false">
 			<router-view></router-view>
 		</div>
