@@ -18,6 +18,14 @@
 				<img src="@/assets/img/providers.svg" alt="" />
 				<h1>Providers</h1>
 			</router-link>
+			<router-link class="navbar-link" to="/sales">
+				<img src="@/assets/img/sales.svg" alt="" />
+				<h1>Sales</h1>
+			</router-link>
+			<router-link class="navbar-link" to="/reports">
+				<img src="@/assets/img/reports.svg" alt="" />
+				<h1>Reports</h1>
+			</router-link>
 		</div>
 		<span class="section-divisor" />
 		<div id="options-div">
