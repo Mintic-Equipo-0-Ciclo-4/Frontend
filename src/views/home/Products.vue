@@ -117,6 +117,9 @@ export default {
 	grid-template-columns: 50px max-content auto;
 
 	margin-bottom: 15px;
+
+	animation: 180ms linear spawnFile;
+	overflow: hidden;
 }
 
 .file-loaded img {
@@ -159,5 +162,19 @@ export default {
 	left: 28px;
 
 	transform: translate(-8px, -4px) rotate(-45deg);
+}
+
+@keyframes spawnFile {
+	0% {
+		height: 0px;
+		opacity: 0;
+	}
+	50% {
+		height: 50px;
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 </style>
