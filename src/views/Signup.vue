@@ -20,7 +20,7 @@
 <script>
 import RectButton from "@/components/RectButton.vue";
 import TextInput from "@/components/TextInput.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
 	data() {
@@ -38,6 +38,7 @@ export default {
 	},
 	methods: {
 		...mapActions(["createUser"]),
+		...mapMutations(["spawnNotification"]),
 		checkValid(prop) {
 			if (this[prop].content.length == 0) {
 				this[prop].errors = ["Required field"];
@@ -79,6 +80,7 @@ export default {
 					}
 				}
 			} else {
+				this.spawnNotification({ text: "Usuario creado exitosamente" });
 				this.$router.push("/login");
 			}
 		},

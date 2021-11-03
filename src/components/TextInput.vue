@@ -64,6 +64,7 @@ input {
 
 	border: none;
 	outline: #d4d4d4 solid 1px;
+	border-radius: 2px;
 
 	font-size: 16px;
 	text-indent: 10px;

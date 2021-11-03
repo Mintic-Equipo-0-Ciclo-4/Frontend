@@ -29,6 +29,11 @@ export default {
 	},
 	methods: {
 		sendFiles() {
+			if (this.files.length < 1) {
+				this.spawnNotification({ text: "Por favor selecione un archivo" });
+				return;
+			}
+
 			let reader = new FileReader();
 
 			for (let file of this.files) {
@@ -45,6 +50,7 @@ export default {
 								break;
 							}
 							default: {
+								this.spawnNotification({ text: "Error desconocido. Revise el trace de errores", error: true });
 								console.trace("Error desconocido:", response);
 							}
 						}

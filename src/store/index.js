@@ -8,6 +8,7 @@ export default createStore({
 			text: "",
 			show: false,
 			error: false,
+			_id: -1,
 		},
 	},
 	mutations: {
@@ -21,9 +22,16 @@ export default createStore({
 			state.notification.text = text;
 			state.notification.show = true;
 			state.notification.error = error || false;
-			setTimeout(() => {
+			clearTimeout(state.notification._id);
+			let _id = setTimeout(() => {
 				state.notification.show = false;
 			}, disposeTime || 4000);
+
+			state.notification._id = _id;
+		},
+		despawnNotification(state, payload) {
+			state.notification.show = false;
+			clearTimeout(state.notification._id);
 		},
 	},
 	actions: {

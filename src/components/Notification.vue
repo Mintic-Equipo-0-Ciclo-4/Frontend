@@ -1,7 +1,7 @@
 <template>
 	<div class="notification" :class="{ showing: modelValue, error: error }">
 		<p>{{ text }}</p>
-		<RectButton content="ok" class="ok-button" @click="modelValue = false" text></RectButton>
+		<RectButton content="ok" class="ok-button" @click="$store.commit('despawnNotification')" text></RectButton>
 	</div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
 			this.$emit("update:modelValue", this.modelValue);
 		},
 	},
+
 	components: { RectButton },
 };
 </script>
