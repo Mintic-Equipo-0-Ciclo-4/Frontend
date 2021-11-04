@@ -130,7 +130,7 @@ export default {
 		height: 700px;
 		width: 600px;
 
-		box-shadow: 5px 5px 5px #c0c0c0;
+		box-shadow: 0px 0px 15px #c0c0c0;
 
 		/* outline: #6200ee solid 2px; */
 	}

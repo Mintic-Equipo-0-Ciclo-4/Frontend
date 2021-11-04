@@ -1,5 +1,13 @@
 <template>
-	<div class="text-input-div" :class="{ filled, error: errors.length != 0 }">
+	<div
+		class="text-input-div"
+		:class="{ filled, error: errors.length != 0 }"
+		:style="{
+			'--background': background != null ? background : '#fff',
+			'--linecolor': linecolor != null ? linecolor : '#d4d4d4',
+			'--color': color != null ? color : '#aaa',
+		}"
+	>
 		<input
 			v-model="modelValue.content"
 			:type="password != undefined ? 'password' : 'text'"
@@ -7,14 +15,14 @@
 			@update:modelValue="$emit('update:modelValue', this.modelValue)"
 			@focus="this.modelValue.errors = []"
 		/>
-		<label class="placeholder-label">{{ placeholder }}</label>
+		<label class="placeholder-label">{{ placeholder }} </label>
 		<label class="error-label" v-if="errors.length != 0" :class="{ filled: filled }">{{ errors.slice(-1)[0] }}</label>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ["placeholder", "modelValue", "password", "email", "validate"],
+	props: ["placeholder", "modelValue", "password", "email", "validate", "background", "linecolor", "color"],
 	computed: {
 		filled() {
 			return this.modelValue.content.length != 0;
@@ -63,13 +71,15 @@ input {
 	height: 100%;
 
 	border: none;
-	outline: #d4d4d4 solid 1px;
+	outline: var(--linecolor) solid 1px;
 	border-radius: 2px;
 
 	font-size: 16px;
 	text-indent: 10px;
 
 	transition-duration: 100ms;
+
+	background-color: var(--background);
 }
 
 .text-input-div.error input {
@@ -89,8 +99,8 @@ input {
 	left: 6px;
 	padding: 0px 10px;
 
-	color: #aaaaaa;
-	background-color: #ffffff;
+	color: var(--color);
+	background-color: var(--background);
 
 	transition-duration: 200ms;
 
@@ -98,7 +108,7 @@ input {
 }
 .text-input-div.filled .placeholder-label {
 	top: -9px;
-	color: #aaa;
+	color: var(--color);
 	font-size: 14px;
 }
 .text-input-div.error .placeholder-label {

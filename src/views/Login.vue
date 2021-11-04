@@ -113,7 +113,7 @@ export default {
 		height: 500px;
 		width: 600px;
 
-		box-shadow: 0px 4px 6px #c0c0c0;
+		box-shadow: 0px 0px 8px #a0a0a0;
 
 		/* outline: #6200ee solid 2px; */
 	}

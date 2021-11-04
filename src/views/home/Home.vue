@@ -79,7 +79,7 @@ export default {
 	width: 40px;
 	height: 5px;
 
-	background-color: rgb(255, 255, 255);
+	background-color: #ffffff;
 
 	margin-top: 5px;
 
