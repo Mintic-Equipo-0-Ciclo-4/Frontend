@@ -36,7 +36,7 @@ export default {
 	align-self: center;
 
 	display: grid;
-	grid-template-rows: 40px auto 150px;
+	grid-template-rows: 40px 470px auto;
 
 	width: 100%;
 	height: 100%;
@@ -44,13 +44,15 @@ export default {
 	box-shadow: 0px 0px 5px rgb(116, 116, 116);
 }
 .clients-main-container h1 {
-	justify-self: left;
+	width: 80%;
+
+	justify-self: center;
 	align-self: center;
 
 	font-family: Roboto-Light;
 	font-size: 20px;
 
-	margin-left: 60px;
+	text-align: left;
 }
 .inputs-div {
 	display: flex;
