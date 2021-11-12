@@ -2,7 +2,7 @@
 	<div class="clients-main-container">
 		<h1>Clients</h1>
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
-		<div class="table-container"></div>
+		<Table :model="model"></Table>
 	</div>
 </template>
 
@@ -10,14 +10,97 @@
 import RectButton from "@/components/RectButton.vue";
 import TextInput from "@/components/TextInput.vue";
 import SearchBar from "@/components/SearchBar.vue";
+import Table from "@/components/Table.vue";
 
 export default {
 	data() {
 		return {
 			search: "",
+			model: [
+				{
+					nombre: "thomas",
+					edad: 16,
+					ciudad: "cajica",
+				},
+				{
+					nombre: "angie",
+					edad: 17,
+					ciudad: "cajica",
+				},
+				{
+					nombre: "juan",
+					edad: 19,
+					ciudad: "cajica",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+				{
+					nombre: "maria",
+					edad: 15,
+					ciudad: "bogota",
+				},
+			],
 		};
 	},
-	components: { RectButton, TextInput, SearchBar },
+	components: { RectButton, TextInput, SearchBar, Table },
 };
 </script>
 
@@ -31,22 +114,32 @@ export default {
 
 	width: 100%;
 	height: 100%;
+	max-height: 100%;
 
-	box-shadow: 0px 0px 5px rgb(116, 116, 116);
+	box-shadow: 0px 0px 5px #747474;
+
+	overflow-y: hidden;
 }
 
 .clients-main-container h1 {
 	font-family: Roboto-Light;
 	align-self: flex-start;
-	justify-self: left;
-	text-indent: 17px;
+	justify-self: center;
+
 	margin-top: 10px;
+	text-align: left;
+
+	width: 95%;
+}
+
+.clients-main-container div:nth-last-child(1) {
+	width: 95%;
 }
 
 @media screen and (min-width: 800px) {
 	.clients-main-container {
 		height: 650px;
-		width: 600px;
+		width: 1000px;
 
 		box-shadow: 0px 0px 8px #a0a0a0;
 

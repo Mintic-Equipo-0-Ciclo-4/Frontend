@@ -110,6 +110,6 @@ export default {
 	max-width: 100%;
 	max-height: 100%;
 
-	overflow: auto;
+	overflow: hidden;
 }
 </style>
