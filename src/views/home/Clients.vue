@@ -1,32 +1,23 @@
 <template>
 	<div class="clients-main-container">
-		<h1>New Client</h1>
-		<div class="inputs-div">
-			<TextInput placeholder="Cedula" v-model="cedula" background="#e9e9e9" linecolor="#888" color="#666"></TextInput>
-			<TextInput placeholder="Nombre" v-model="fullname" background="#e9e9e9" linecolor="#888" color="#666"></TextInput>
-			<TextInput placeholder="Address" v-model="address" background="#e9e9e9" linecolor="#888" color="#666"></TextInput>
-			<TextInput placeholder="Phone" v-model="phone" background="#e9e9e9" linecolor="#888" color="#666"></TextInput>
-			<TextInput placeholder="Email" v-model="email" background="#e9e9e9" linecolor="#888" color="#666"></TextInput>
-		</div>
-		<RectButton content="Send" class="send-button" main></RectButton>
+		<h1>Clients</h1>
+		<SearchBar placeholder="client" v-model="search"></SearchBar>
+		<div class="table-container"></div>
 	</div>
 </template>
 
 <script>
 import RectButton from "@/components/RectButton.vue";
 import TextInput from "@/components/TextInput.vue";
+import SearchBar from "@/components/SearchBar.vue";
 
 export default {
 	data() {
 		return {
-			cedula: { content: "" },
-			fullname: { content: "" },
-			address: { content: "" },
-			phone: { content: "" },
-			email: { content: "" },
+			search: "",
 		};
 	},
-	components: { RectButton, TextInput },
+	components: { RectButton, TextInput, SearchBar },
 };
 </script>
 
@@ -36,35 +27,20 @@ export default {
 	align-self: center;
 
 	display: grid;
-	grid-template-rows: 40px 470px auto;
+	grid-template-rows: 75px 50px auto;
 
 	width: 100%;
 	height: 100%;
 
 	box-shadow: 0px 0px 5px rgb(116, 116, 116);
 }
+
 .clients-main-container h1 {
-	width: 80%;
-
-	justify-self: center;
-	align-self: center;
-
 	font-family: Roboto-Light;
-	font-size: 20px;
-
-	text-align: left;
-}
-.inputs-div {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-content: flex-start;
-}
-
-.send-button {
-	justify-self: center;
 	align-self: flex-start;
-	width: 81%;
+	justify-self: left;
+	text-indent: 17px;
+	margin-top: 10px;
 }
 
 @media screen and (min-width: 800px) {
