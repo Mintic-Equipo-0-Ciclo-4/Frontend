@@ -1,5 +1,5 @@
 <template>
-	<div class="main-table-container">
+	<div class="main-table-container" :class="{ 'with-template': template != null }" :style="{ '--template': template }">
 		<div class="table-header">
 			<h1 v-for="header of headers" :key="header.key">{{ header }}</h1>
 		</div>
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-	props: ["data", "headers"],
+	props: ["data", "headers", "template"],
 	data() {
 		return {};
 	},
@@ -35,6 +35,11 @@ export default {
 	overflow: hidden;
 }
 
+.main-table-container.with-template .table-header {
+	display: grid;
+	grid-template-columns: var(--template);
+}
+
 .table-header {
 	display: flex;
 	justify-content: space-around;
@@ -46,7 +51,9 @@ export default {
 
 .table-header h1 {
 	font-family: Roboto-Light;
-	font-size: 18px;
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #1d1d1d;
 
 	width: 100%;
 	text-align: left;
@@ -60,10 +67,12 @@ export default {
 	max-height: 100%;
 	overflow-y: auto;
 }
-/* 
+
+/*TODO: Mejorar el scrollbar en las tablas desktop*/
+
 .table-body::-webkit-scrollbar {
 	display: none;
-} */
+}
 
 .table-row {
 	display: flex;
@@ -73,6 +82,11 @@ export default {
 
 	border: solid #b6b6b6;
 	border-width: 0px 0px 1px 0px;
+}
+
+.main-table-container.with-template .table-row {
+	display: grid;
+	grid-template-columns: var(--template);
 }
 
 .table-field {

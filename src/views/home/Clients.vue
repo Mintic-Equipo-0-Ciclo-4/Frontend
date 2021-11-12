@@ -2,7 +2,7 @@
 	<div class="clients-main-container">
 		<h1>Clients</h1>
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
-		<Table :data="tableData" :headers="tableHeaders"></Table>
+		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'"></Table>
 	</div>
 </template>
 
