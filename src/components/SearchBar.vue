@@ -71,7 +71,6 @@ export default {
 	outline: none;
 
 	cursor: pointer;
-
 	background-color: #6600ee;
 }
 
