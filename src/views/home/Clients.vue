@@ -73,7 +73,7 @@ export default {
 
 @media screen and (min-width: 800px) {
 	.clients-main-container {
-		height: 650px;
+		height: 820px;
 		width: 1200px;
 
 		box-shadow: 0px 0px 8px #a0a0a0;

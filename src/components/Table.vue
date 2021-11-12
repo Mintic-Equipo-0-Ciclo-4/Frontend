@@ -4,9 +4,23 @@
 			<h1 v-for="header of headers" :key="header.key">{{ header }}</h1>
 		</div>
 		<div class="table-body">
-			<div class="table-row" v-for="object of data" :key="object.key">
+			<div class="table-row" v-for="object of displayData" :key="object.key">
 				<div class="table-field" v-for="field of Object.values(object)" :key="field.key">{{ field }}</div>
 			</div>
+		</div>
+		<div class="table-options-div">
+			<label>Rows per page: </label>
+			<input class="rows-per-page-input" type="number" v-model="rowsPerPage" @update:modelValue="page = 1" />
+			<label>{{ start + 1 }}-{{ end }} of {{ data.length }}</label>
+
+			<button class="table-page-button full-back-button"></button>
+			<button class="table-page-button back-button" @click="page < 2 ? null : page--">
+				<img src="@/assets/img/nav-before.svg" alt="" />
+			</button>
+			<button class="table-page-button next-button" @click="page >= maxPages ? null : page++">
+				<img src="@/assets/img/nav-next.svg" alt="" />
+			</button>
+			<button class="table-page-button full-next-button"></button>
 		</div>
 	</div>
 </template>
@@ -15,7 +29,24 @@
 export default {
 	props: ["data", "headers", "template"],
 	data() {
-		return {};
+		return {
+			page: 2,
+			rowsPerPage: 10,
+		};
+	},
+	computed: {
+		displayData() {
+			return this.data.slice(this.start, this.end);
+		},
+		maxPages() {
+			return Math.ceil(this.data.length / this.rowsPerPage);
+		},
+		start() {
+			return (this.page - 1) * this.rowsPerPage;
+		},
+		end() {
+			return this.start + this.rowsPerPage;
+		},
 	},
 };
 </script>
@@ -26,7 +57,7 @@ export default {
 	justify-self: center;
 
 	display: grid;
-	grid-template-rows: 50px auto;
+	grid-template-rows: 55px auto 55px;
 
 	width: 100%;
 	height: 95%;
@@ -97,5 +128,45 @@ export default {
 
 .table-field:nth-child(1) {
 	width: 70%;
+}
+
+.table-options-div {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	height: 100%;
+
+	border: solid #b6b6b6;
+	border-width: 1px 0px 0px 0px;
+}
+
+.table-options-div label:nth-child(1) {
+	margin-right: 10px;
+}
+.table-options-div label:nth-child(3) {
+	margin: 0px 30px;
+}
+
+.rows-per-page-input {
+	height: 20px;
+	width: 40px;
+}
+
+.table-page-button {
+	width: 26px;
+	height: 26px;
+
+	margin: 0px 5px;
+
+	border: none;
+	outline: none;
+
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.table-page-button img {
+	width: 24px;
 }
 </style>
