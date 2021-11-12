@@ -110,5 +110,20 @@ export default createStore({
 				return { status: response.status, error: response.statusText };
 			}
 		},
+
+		async getClients(context, payload) {
+			const response = await fetch("/api/clients", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			const body = await response.json();
+
+			if (response.ok) {
+				return { status: response.status, error: null, body };
+			} else {
+				return { status: response.status, error: response.statusText };
+			}
+		},
 	},
 });

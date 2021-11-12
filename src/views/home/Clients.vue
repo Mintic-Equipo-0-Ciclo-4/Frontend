@@ -2,7 +2,7 @@
 	<div class="clients-main-container">
 		<h1>Clients</h1>
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
-		<Table :model="model"></Table>
+		<Table :data="tableData" :headers="tableHeaders"></Table>
 	</div>
 </template>
 
@@ -11,96 +11,31 @@ import RectButton from "@/components/RectButton.vue";
 import TextInput from "@/components/TextInput.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import Table from "@/components/Table.vue";
+import { mapActions } from "vuex";
 
 export default {
 	data() {
 		return {
 			search: "",
-			model: [
-				{
-					nombre: "thomas",
-					edad: 16,
-					ciudad: "cajica",
-				},
-				{
-					nombre: "angie",
-					edad: 17,
-					ciudad: "cajica",
-				},
-				{
-					nombre: "juan",
-					edad: 19,
-					ciudad: "cajica",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-				{
-					nombre: "maria",
-					edad: 15,
-					ciudad: "bogota",
-				},
-			],
+			tableData: [],
+			tableHeaders: [],
 		};
 	},
+	methods: {
+		...mapActions(["getClients"]),
+	},
 	components: { RectButton, TextInput, SearchBar, Table },
+	async created() {
+		let response = await this.getClients();
+		let clients = response.body;
+
+		this.tableData = clients.map((value) => {
+			let { cedula, nombre, telefono, email, direccion } = value;
+			return { cedula, nombre, telefono, email, direccion };
+		});
+
+		this.tableHeaders = Object.keys(this.tableData[0]);
+	},
 };
 </script>
 
@@ -139,7 +74,7 @@ export default {
 @media screen and (min-width: 800px) {
 	.clients-main-container {
 		height: 650px;
-		width: 1000px;
+		width: 1200px;
 
 		box-shadow: 0px 0px 8px #a0a0a0;
 

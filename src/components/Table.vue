@@ -4,7 +4,7 @@
 			<h1 v-for="header of headers" :key="header.key">{{ header }}</h1>
 		</div>
 		<div class="table-body">
-			<div class="table-row" v-for="object of model" :key="object.key">
+			<div class="table-row" v-for="object of data" :key="object.key">
 				<div class="table-field" v-for="field of Object.values(object)" :key="field.key">{{ field }}</div>
 			</div>
 		</div>
@@ -13,11 +13,9 @@
 
 <script>
 export default {
-	props: ["model"],
+	props: ["data", "headers"],
 	data() {
-		return {
-			headers: Object.keys(this.model[0]),
-		};
+		return {};
 	},
 };
 </script>
@@ -43,22 +41,33 @@ export default {
 	align-items: center;
 
 	border: solid #b6b6b6;
-	border-width: 1px 0px 1px 0px;
+	border-width: 0px 0px 1px 0px;
 }
 
 .table-header h1 {
 	font-family: Roboto-Light;
 	font-size: 18px;
+
+	width: 100%;
+	text-align: left;
+}
+
+.table-header h1:nth-child(1) {
+	width: 70%;
 }
 
 .table-body {
 	max-height: 100%;
 	overflow-y: auto;
 }
+/* 
+.table-body::-webkit-scrollbar {
+	display: none;
+} */
 
 .table-row {
 	display: flex;
-	height: 40px;
+	height: 50px;
 	justify-content: space-around;
 	align-items: center;
 
@@ -68,5 +77,11 @@ export default {
 
 .table-field {
 	width: 100%;
+	text-align: left;
+	overflow-x: hidden;
+}
+
+.table-field:nth-child(1) {
+	width: 70%;
 }
 </style>
