@@ -35,7 +35,7 @@
 
 <script>
 export default {
-	props: ["data", "headers", "template"],
+	props: ["data", "headers", "template", "query"],
 	data() {
 		return {
 			page: 1,
@@ -44,6 +44,17 @@ export default {
 	},
 	computed: {
 		displayData() {
+			// if (this.query == null) return this.data.slice(this.start, this.end);
+			// else {
+			// 	let dups = Object.entries(this.query);
+			// 	let res = this.data.filter((value) => {
+			// 		for (let dup of dups) {
+			// 			return String(value[dup[0]]).toLowerCase().includes(dup[1].toLowerCase());
+			// 		}
+			// 	});
+			// 	return res.slice(this.start, this.end);
+			// }
+
 			return this.data.slice(this.start, this.end);
 		},
 		maxPages() {

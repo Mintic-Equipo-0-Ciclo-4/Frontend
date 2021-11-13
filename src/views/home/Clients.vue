@@ -2,7 +2,7 @@
 	<div class="clients-main-container">
 		<h1>Clients</h1>
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
-		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'"></Table>
+		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'" :query="tableQuery"></Table>
 	</div>
 </template>
 
@@ -23,6 +23,12 @@ export default {
 	},
 	methods: {
 		...mapActions(["getClients"]),
+	},
+	computed: {
+		tableQuery() {
+			if (this.search == "") return null;
+			return { nombre: this.search };
+		},
 	},
 	components: { RectButton, TextInput, SearchBar, Table },
 	async created() {
