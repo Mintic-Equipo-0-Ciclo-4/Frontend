@@ -9,18 +9,26 @@
 			</div>
 		</div>
 		<div class="table-options-div">
-			<label>Rows per page: </label>
+			<label>Rows per page </label>
 			<input class="rows-per-page-input" type="number" v-model="rowsPerPage" @update:modelValue="page = 1" />
-			<label>{{ start + 1 }}-{{ end }} of {{ data.length }}</label>
+			<label>{{ start + 1 }}-{{ end > data.length ? data.length : end }} of {{ data.length }}</label>
 
-			<button class="table-page-button full-back-button"></button>
-			<button class="table-page-button back-button" @click="page < 2 ? null : page--">
+			<button class="table-page-button full-back-button" @click="page = 1" :class="{ inactive: page === 1 }">
+				<img src="@/assets/img/nav-first.svg" alt="" />
+			</button>
+			<button class="table-page-button back-button" @click="page < 2 ? null : page--" :class="{ inactive: page === 1 }">
 				<img src="@/assets/img/nav-before.svg" alt="" />
 			</button>
-			<button class="table-page-button next-button" @click="page >= maxPages ? null : page++">
+			<button
+				class="table-page-button next-button"
+				@click="page >= maxPages ? null : page++"
+				:class="{ inactive: page === maxPages }"
+			>
 				<img src="@/assets/img/nav-next.svg" alt="" />
 			</button>
-			<button class="table-page-button full-next-button"></button>
+			<button class="table-page-button full-next-button" @click="page = maxPages" :class="{ inactive: page === maxPages }">
+				<img src="@/assets/img/nav-last.svg" alt="" />
+			</button>
 		</div>
 	</div>
 </template>
@@ -30,7 +38,7 @@ export default {
 	props: ["data", "headers", "template"],
 	data() {
 		return {
-			page: 2,
+			page: 1,
 			rowsPerPage: 10,
 		};
 	},
@@ -64,6 +72,9 @@ export default {
 	max-height: 100%;
 
 	overflow: hidden;
+
+	border: 1px #b6b6b6 solid;
+	border-radius: 4px;
 }
 
 .main-table-container.with-template .table-header {
@@ -91,7 +102,7 @@ export default {
 }
 
 .table-header h1:nth-child(1) {
-	width: 70%;
+	margin-left: 16px;
 }
 
 .table-body {
@@ -127,30 +138,52 @@ export default {
 }
 
 .table-field:nth-child(1) {
-	width: 70%;
+	margin-left: 16px;
 }
 
 .table-options-div {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+	display: grid;
+	grid-template-columns: auto 80px 180px 40px 40px 40px 40px;
 
 	height: 100%;
 
 	border: solid #b6b6b6;
 	border-width: 1px 0px 0px 0px;
+
+	user-select: none;
+}
+
+.table-options-div > * {
+	justify-self: center;
+	align-self: center;
+}
+
+.table-options-div label {
+	color: #333333;
 }
 
 .table-options-div label:nth-child(1) {
 	margin-right: 10px;
+	justify-self: right;
 }
 .table-options-div label:nth-child(3) {
 	margin: 0px 30px;
 }
 
 .rows-per-page-input {
-	height: 20px;
-	width: 40px;
+	height: 34px;
+	width: 75px;
+
+	background-color: transparent;
+	border: solid 1px #686868;
+	border-radius: 6px;
+	outline: none;
+
+	text-align: center;
+	font-size: 16px;
+	font-family: Roboto-Bold;
+
+	color: #333333;
 }
 
 .table-page-button {
@@ -167,6 +200,14 @@ export default {
 }
 
 .table-page-button img {
-	width: 24px;
+	width: 100%;
+}
+
+.table-page-button.inactive {
+	pointer-events: none;
+}
+
+.table-page-button.inactive img {
+	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(92%) contrast(0%);
 }
 </style>

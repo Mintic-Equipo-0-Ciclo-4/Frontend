@@ -51,7 +51,7 @@ export default {
 	height: 100%;
 	max-height: 100%;
 
-	box-shadow: 0px 0px 5px #747474;
+	/* box-shadow: 0px 0px 5px #747474; */
 
 	overflow-y: hidden;
 }
@@ -76,7 +76,7 @@ export default {
 		height: 820px;
 		width: 1200px;
 
-		box-shadow: 0px 0px 8px #a0a0a0;
+		/* box-shadow: 0px 0px 8px #a0a0a0; */
 
 		/* outline: #6200ee solid 2px; */
 	}
