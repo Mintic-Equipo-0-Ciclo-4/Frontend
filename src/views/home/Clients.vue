@@ -4,6 +4,11 @@
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
 		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'" :query="tableQuery"></Table>
 	</div>
+
+	<button class="create-client-button">
+		<span class="button-bar"></span>
+		<span class="button-bar"></span>
+	</button>
 </template>
 
 <script>
@@ -75,6 +80,42 @@ export default {
 
 .clients-main-container div:nth-last-child(1) {
 	width: 95%;
+}
+
+.create-client-button {
+	position: absolute;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: #6600ee;
+	box-shadow: 0px 0px 6px #363636;
+
+	width: 66px;
+	height: 66px;
+
+	border-radius: 50%;
+	border: none;
+	outline: none;
+
+	right: 30px;
+	bottom: 30px;
+
+	cursor: pointer;
+}
+
+.create-client-button > span {
+	position: absolute;
+
+	width: 18px;
+	height: 2px;
+
+	background-color: #fff;
+}
+
+.create-client-button > span:nth-child(2) {
+	transform: rotate(90deg);
 }
 
 @media screen and (min-width: 800px) {
