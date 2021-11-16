@@ -14,6 +14,7 @@
 			:id="placeholder + '-input'"
 			@update:modelValue="$emit('update:modelValue', this.modelValue)"
 			@focus="this.modelValue.errors = []"
+			autocomplete="off"
 		/>
 		<label class="placeholder-label">{{ placeholder }} </label>
 		<label class="error-label" v-if="errors.length != 0" :class="{ filled: filled }">{{ errors.slice(-1)[0] }}</label>

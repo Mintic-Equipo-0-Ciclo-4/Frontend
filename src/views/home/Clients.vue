@@ -5,14 +5,17 @@
 		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'" :query="tableQuery"></Table>
 	</div>
 
-	<button class="create-client-button">
+	<button class="create-client-button" @click="showForm = !showForm">
 		<span class="button-bar"></span>
 		<span class="button-bar"></span>
 	</button>
+
+	<FloatForm v-model="formData" v-if="showForm" title="New Client" @close-form="showForm = false"></FloatForm>
 </template>
 
 <script>
 import RectButton from "@/components/RectButton.vue";
+import FloatForm from "@/components/FloatForm.vue";
 import TextInput from "@/components/TextInput.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import Table from "@/components/Table.vue";
@@ -24,6 +27,14 @@ export default {
 			search: "",
 			tableData: [],
 			tableHeaders: [],
+			formData: [
+				{ model: { content: "" }, name: "cedula" },
+				{ model: { content: "" }, name: "telefono" },
+				{ model: { content: "" }, name: "nombre" },
+				{ model: { content: "" }, name: "email" },
+				{ model: { content: "" }, name: "direccion" },
+			],
+			showForm: false,
 		};
 	},
 	methods: {
@@ -35,7 +46,7 @@ export default {
 			return { nombre: this.search };
 		},
 	},
-	components: { RectButton, TextInput, SearchBar, Table },
+	components: { RectButton, TextInput, SearchBar, Table, FloatForm },
 	async created() {
 		let response = await this.getClients();
 		let clients = response.body;
