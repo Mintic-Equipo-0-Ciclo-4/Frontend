@@ -125,5 +125,20 @@ export default createStore({
 				return { status: response.status, error: response.statusText };
 			}
 		},
+
+		async createClient(context, payload) {
+			const response = await fetch("/api/clients", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+
+			if (response.ok) {
+				return { status: response.status, error: null };
+			} else {
+				let body = await response.json();
+				return { status: response.status, error: response.statusText, body };
+			}
+		},
 	},
 });

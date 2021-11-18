@@ -10,7 +10,7 @@
 		<span class="button-bar"></span>
 	</button>
 
-	<FloatForm v-model="formData" v-if="showForm" title="New Client" @close-form="showForm = false"></FloatForm>
+	<FloatForm v-model="formData" v-if="showForm" title="New Client" :send="send" @close-form="showForm = false"></FloatForm>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ import FloatForm from "@/components/FloatForm.vue";
 import TextInput from "@/components/TextInput.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import Table from "@/components/Table.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
 	data() {
@@ -28,17 +28,63 @@ export default {
 			tableData: [],
 			tableHeaders: [],
 			formData: [
-				{ model: { content: "" }, name: "cedula" },
-				{ model: { content: "" }, name: "telefono" },
-				{ model: { content: "" }, name: "nombre" },
-				{ model: { content: "" }, name: "email" },
-				{ model: { content: "" }, name: "direccion" },
+				{ model: { content: "-1" }, name: "cedula" },
+				{ model: { content: "-1" }, name: "telefono" },
+				{ model: { content: "Test" }, name: "nombre" },
+				{ model: { content: "Test" }, name: "email" },
+				{ model: { content: "Test" }, name: "direccion" },
 			],
 			showForm: false,
 		};
 	},
 	methods: {
-		...mapActions(["getClients"]),
+		...mapActions(["getClients", "createClient"]),
+		...mapMutations(["spawnNotification"]),
+		checkValid(index) {
+			if (this.formData[index].model.content.length == 0) {
+				this.formData[index].model.errors = ["Required field"];
+				return false;
+			}
+			if (this.formData[index].model.errorCount) {
+				if (this.formData[index].model.errorCount != 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			return true;
+		},
+		async send() {
+			let cliente = {};
+			for (let i = 0; i < this.formData.length; i++) {
+				if (!this.checkValid(i)) return;
+				cliente[this.formData[i].name] = this.formData[i].model.content;
+			}
+
+			let response = await this.createClient(cliente);
+
+			if (response.error) {
+				switch (response.status) {
+					case 400:
+						this.spawnNotification({ text: "Se ingreso un dato invalido o inexistente" });
+						break;
+					case 401:
+						this.$store.state.auth = false;
+						this.$router.push("login");
+						break;
+					case 409:
+						let index = this.formData.findIndex((value) => value.name === response.body.conflictParam);
+						this.formData[index].model.errors = ["Already exists"];
+						break;
+					default:
+						console.log("Error interno del servidor. Revisar el trace de errores");
+						console.trace(response);
+				}
+			} else {
+				this.showForm = false;
+				this.spawnNotification({ text: "Cliente creado exitosamente" });
+			}
+		},
 	},
 	computed: {
 		tableQuery() {

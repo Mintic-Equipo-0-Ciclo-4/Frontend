@@ -15,7 +15,7 @@
 				></TextInput>
 			</div>
 			<div class="buttons-div">
-				<RectButton class="send-button" content="Send" @click="$emit('close-form')" main></RectButton>
+				<RectButton class="send-button" content="Send" @click="send()" main></RectButton>
 			</div>
 		</div>
 	</div>
@@ -26,7 +26,7 @@ import TextInput from "@/components/TextInput.vue";
 import RectButton from "@/components/RectButton.vue";
 
 export default {
-	props: ["modelValue", "title", "show"],
+	props: ["modelValue", "title", "show", "send"],
 	components: { TextInput, RectButton },
 };
 </script>
