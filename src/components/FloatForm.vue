@@ -18,6 +18,8 @@
 				<RectButton class="send-button" content="Send" @click="send()" main></RectButton>
 			</div>
 		</div>
+
+		<div class="close-form-background" @click="$emit('close-form')"></div>
 	</div>
 </template>
 
@@ -97,6 +99,15 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.close-form-background {
+	position: absolute;
+	background-color: #4e4e4e4d;
+	width: 100%;
+	height: 100%;
+
+	z-index: -1;
 }
 
 /* @keyframes spawnForm {

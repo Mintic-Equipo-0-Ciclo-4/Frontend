@@ -28,11 +28,11 @@ export default {
 			tableData: [],
 			tableHeaders: [],
 			formData: [
-				{ model: { content: "-1" }, name: "cedula" },
-				{ model: { content: "-1" }, name: "telefono" },
-				{ model: { content: "Test" }, name: "nombre" },
-				{ model: { content: "Test" }, name: "email" },
-				{ model: { content: "Test" }, name: "direccion" },
+				{ model: { content: "" }, name: "cedula" },
+				{ model: { content: "" }, name: "telefono" },
+				{ model: { content: "" }, name: "nombre" },
+				{ model: { content: "" }, name: "email", email: true },
+				{ model: { content: "" }, name: "direccion" },
 			],
 			showForm: false,
 		};
