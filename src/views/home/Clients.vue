@@ -97,6 +97,7 @@ export default {
 		async tableDeleteClient(client) {
 			this.deleteClient(client);
 			this.setClients();
+			this.spawnNotification({ text: "Usuario eliminado exitosamente" });
 		},
 		async setClients() {
 			let response = await this.getClients();

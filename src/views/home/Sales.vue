@@ -1,5 +1,6 @@
 <template>
-	<SelectInput :options="selectOptions"></SelectInput>
+	<SelectInput :options="selectOptions" v-model="value"></SelectInput>
+	<h1>{{ value }}</h1>
 </template>
 
 <script>
@@ -10,6 +11,7 @@ export default {
 	data() {
 		return {
 			selectOptions: ["test", "otro", "mas"],
+			value: "test",
 		};
 	},
 	components: { SelectInput },

@@ -19,7 +19,11 @@ export default {
 			selection: this.options[0],
 		};
 	},
-	setup() {},
+	watch: {
+		selection() {
+			this.$emit("update:modelValue", this.selection);
+		},
+	},
 };
 </script>
 
@@ -31,8 +35,8 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 
-	width: 120px;
 	height: 40px;
+	width: 100%;
 
 	border-radius: 6px;
 	outline: 2px #6600ee solid;

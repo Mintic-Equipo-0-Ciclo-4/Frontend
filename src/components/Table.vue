@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import SelectInput from "@/components/SelectInput.vue";
+
 export default {
 	props: ["data", "headers", "template", "query", "deletable", "ondelete"],
 	data() {
@@ -70,6 +72,7 @@ export default {
 			return this.start + this.rowsPerPage;
 		},
 	},
+	components: { SelectInput },
 };
 </script>
 
@@ -143,7 +146,7 @@ export default {
 }
 
 .table-row:hover {
-	background-color: #dbdbdb;
+	background-color: #e2e2e2;
 }
 
 .main-table-container.with-template .table-row {
