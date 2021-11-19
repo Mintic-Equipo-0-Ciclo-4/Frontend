@@ -6,6 +6,9 @@
 		<div class="table-body">
 			<div class="table-row" v-for="object of displayData" :key="object.key">
 				<div class="table-field" v-for="field of Object.values(object)" :key="field.key">{{ field }}</div>
+				<button class="delete-button" v-if="deletable" @click="ondelete(object)">
+					<img src="@/assets/img/delete.svg" class="delete-image" />
+				</button>
 			</div>
 		</div>
 		<div class="table-options-div">
@@ -35,7 +38,7 @@
 
 <script>
 export default {
-	props: ["data", "headers", "template", "query"],
+	props: ["data", "headers", "template", "query", "deletable", "ondelete"],
 	data() {
 		return {
 			page: 1,
@@ -128,6 +131,8 @@ export default {
 }
 
 .table-row {
+	position: relative;
+
 	display: flex;
 	height: 50px;
 	justify-content: space-around;
@@ -220,5 +225,26 @@ export default {
 
 .table-page-button.inactive img {
 	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(92%) contrast(0%);
+}
+
+.delete-button {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+
+	background-color: #6600ee;
+
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	box-shadow: 0px 0px 5px #333333;
+
+	cursor: pointer;
+
+	right: 10px;
+}
+
+.delete-button .delete-image {
+	height: 80%;
 }
 </style>

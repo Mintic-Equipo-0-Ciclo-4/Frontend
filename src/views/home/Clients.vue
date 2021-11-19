@@ -2,7 +2,14 @@
 	<div class="clients-main-container">
 		<h1>Clients</h1>
 		<SearchBar placeholder="client" v-model="search"></SearchBar>
-		<Table :data="tableData" :headers="tableHeaders" :template="'12% 18% 18% 26% 26%'" :query="tableQuery"></Table>
+		<Table
+			:data="tableData"
+			:headers="tableHeaders"
+			:template="'12% 18% 18% 26% 26%'"
+			:query="tableQuery"
+			:deletable="true"
+			:ondelete="tableDeleteClient"
+		></Table>
 	</div>
 
 	<button class="create-client-button" @click="showForm = !showForm">
@@ -38,7 +45,7 @@ export default {
 		};
 	},
 	methods: {
-		...mapActions(["getClients", "createClient"]),
+		...mapActions(["getClients", "createClient", "deleteClient"]),
 		...mapMutations(["spawnNotification"]),
 		checkValid(index) {
 			if (this.formData[index].model.content.length == 0) {
@@ -77,13 +84,30 @@ export default {
 						this.formData[index].model.errors = ["Already exists"];
 						break;
 					default:
-						console.log("Error interno del servidor. Revisar el trace de errores");
+						this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
 						console.trace(response);
 				}
 			} else {
 				this.showForm = false;
 				this.spawnNotification({ text: "Cliente creado exitosamente" });
 			}
+
+			this.setClients();
+		},
+		async tableDeleteClient(client) {
+			this.deleteClient(client);
+			this.setClients();
+		},
+		async setClients() {
+			let response = await this.getClients();
+			let clients = response.body;
+
+			this.tableData = clients.map((value) => {
+				let { cedula, nombre, telefono, email, direccion } = value;
+				return { cedula, nombre, telefono, email, direccion };
+			});
+
+			this.tableHeaders = Object.keys(this.tableData[0]);
 		},
 	},
 	computed: {
@@ -94,15 +118,7 @@ export default {
 	},
 	components: { RectButton, TextInput, SearchBar, Table, FloatForm },
 	async created() {
-		let response = await this.getClients();
-		let clients = response.body;
-
-		this.tableData = clients.map((value) => {
-			let { cedula, nombre, telefono, email, direccion } = value;
-			return { cedula, nombre, telefono, email, direccion };
-		});
-
-		this.tableHeaders = Object.keys(this.tableData[0]);
+		this.setClients();
 	},
 };
 </script>

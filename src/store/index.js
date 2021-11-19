@@ -140,5 +140,13 @@ export default createStore({
 				return { status: response.status, error: response.statusText, body };
 			}
 		},
+
+		async deleteClient(context, { cedula }) {
+			const response = await fetch("/api/clients/" + cedula, {
+				method: "DELETE",
+			});
+
+			console.log(response);
+		},
 	},
 });
