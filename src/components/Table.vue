@@ -142,6 +142,10 @@ export default {
 	border-width: 0px 0px 1px 0px;
 }
 
+.table-row:hover {
+	background-color: #dbdbdb;
+}
+
 .main-table-container.with-template .table-row {
 	display: grid;
 	grid-template-columns: var(--template);
@@ -229,15 +233,16 @@ export default {
 
 .delete-button {
 	position: absolute;
-	width: 32px;
+	width: 28px;
 	height: 32px;
 
-	background-color: #6600ee;
+	/* background-color: #6600ee; */
+	background-color: transparent;
 
 	border: none;
 	outline: none;
 	border-radius: 4px;
-	box-shadow: 0px 0px 5px #333333;
+	/* box-shadow: 0px 0px 5px #333333; */
 
 	cursor: pointer;
 
@@ -246,5 +251,13 @@ export default {
 
 .delete-button .delete-image {
 	height: 80%;
+
+	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(80%) contrast(0%);
+
+	transition-duration: 200ms;
+}
+
+.delete-button:hover .delete-image {
+	filter: invert(18%) sepia(98%) saturate(5533%) hue-rotate(267deg) brightness(81%) contrast(141%);
 }
 </style>
