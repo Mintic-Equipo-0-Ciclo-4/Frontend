@@ -141,12 +141,24 @@ export default createStore({
 			}
 		},
 
+		async updateClient(context, payload) {
+			const response = await fetch("/api/clients", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+
+			if (response.ok) {
+				return { status: response.status, error: null };
+			} else {
+				let body = await response.json();
+				return { status: response.status, error: response.statusText, body };
+			}
+		},
 		async deleteClient(context, { cedula }) {
 			const response = await fetch("/api/clients/" + cedula, {
 				method: "DELETE",
 			});
-
-			console.log(response);
 		},
 	},
 });

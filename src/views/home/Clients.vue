@@ -19,7 +19,16 @@
 		<span class="button-bar"></span>
 	</button>
 
-	<FloatForm v-model="formData" v-if="showForm" title="New Client" :send="send" @close-form="showForm = false"></FloatForm>
+	<FloatForm
+		v-model="formData"
+		v-if="showForm"
+		title="New Client"
+		:send="send"
+		@close-form="
+			showForm = false;
+			setDefaultForm();
+		"
+	></FloatForm>
 </template>
 
 <script>
@@ -37,17 +46,18 @@ export default {
 			tableData: [],
 			tableHeaders: [],
 			formData: [
-				{ model: { content: "a" }, name: "cedula", disabled: true },
+				{ model: { content: "" }, name: "cedula" },
 				{ model: { content: "" }, name: "telefono" },
 				{ model: { content: "" }, name: "nombre" },
 				{ model: { content: "" }, name: "email", email: true },
 				{ model: { content: "" }, name: "direccion" },
 			],
 			showForm: false,
+			updating: false,
 		};
 	},
 	methods: {
-		...mapActions(["getClients", "createClient", "deleteClient"]),
+		...mapActions(["getClients", "createClient", "deleteClient", "updateClient"]),
 		...mapMutations(["spawnNotification"]),
 		checkValid(index) {
 			if (this.formData[index].model.content.length == 0) {
@@ -65,12 +75,17 @@ export default {
 		},
 		async send() {
 			let cliente = {};
+			let response;
 			for (let i = 0; i < this.formData.length; i++) {
 				if (!this.checkValid(i)) return;
 				cliente[this.formData[i].name] = this.formData[i].model.content;
 			}
 
-			let response = await this.createClient(cliente);
+			if (this.updating) {
+				response = await this.updateClient(cliente);
+			} else {
+				response = await this.createClient(cliente);
+			}
 
 			if (response.error) {
 				switch (response.status) {
@@ -90,8 +105,9 @@ export default {
 						console.trace(response);
 				}
 			} else {
+				let text = `Cliente ${this.updating ? "actualizado" : "creado"} exitosamente`;
+				this.spawnNotification({ text });
 				this.showForm = false;
-				this.spawnNotification({ text: "Cliente creado exitosamente" });
 			}
 
 			this.setClients();
@@ -102,7 +118,8 @@ export default {
 			this.spawnNotification({ text: "Usuario eliminado exitosamente" });
 		},
 		async tableUpdateClient(client) {
-			console.log(client);
+			this.setUpdateForm(client);
+			this.showForm = true;
 		},
 		async setClients() {
 			let response = await this.getClients();
@@ -114,6 +131,26 @@ export default {
 			});
 
 			this.tableHeaders = Object.keys(this.tableData[0]);
+		},
+		setDefaultForm() {
+			this.formData = [
+				{ model: { content: "" }, name: "cedula" },
+				{ model: { content: "" }, name: "telefono" },
+				{ model: { content: "" }, name: "nombre" },
+				{ model: { content: "" }, name: "email", email: true },
+				{ model: { content: "" }, name: "direccion" },
+			];
+			this.updating = false;
+		},
+		setUpdateForm(client) {
+			this.updating = true;
+			this.formData = [
+				{ model: { content: client.cedula }, name: "cedula", disabled: true },
+				{ model: { content: client.telefono }, name: "telefono" },
+				{ model: { content: client.nombre }, name: "nombre" },
+				{ model: { content: client.email }, name: "email", email: true },
+				{ model: { content: client.direccion }, name: "direccion" },
+			];
 		},
 	},
 	computed: {
