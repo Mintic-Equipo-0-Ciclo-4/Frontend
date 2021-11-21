@@ -22,7 +22,7 @@
 	<FloatForm
 		v-model="formData"
 		v-if="showForm"
-		title="New Client"
+		:title="`${updating ? 'Update' : 'New'} Client`"
 		:send="send"
 		@close-form="
 			showForm = false;
