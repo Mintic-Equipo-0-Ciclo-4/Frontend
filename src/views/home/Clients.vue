@@ -8,7 +8,9 @@
 			:template="'12% 18% 18% 26% 26%'"
 			:query="tableQuery"
 			:deletable="true"
+			:editable="true"
 			:ondelete="tableDeleteClient"
+			:onupdate="tableUpdateClient"
 		></Table>
 	</div>
 
@@ -35,7 +37,7 @@ export default {
 			tableData: [],
 			tableHeaders: [],
 			formData: [
-				{ model: { content: "" }, name: "cedula" },
+				{ model: { content: "a" }, name: "cedula", disabled: true },
 				{ model: { content: "" }, name: "telefono" },
 				{ model: { content: "" }, name: "nombre" },
 				{ model: { content: "" }, name: "email", email: true },
@@ -98,6 +100,9 @@ export default {
 			this.deleteClient(client);
 			this.setClients();
 			this.spawnNotification({ text: "Usuario eliminado exitosamente" });
+		},
+		async tableUpdateClient(client) {
+			console.log(client);
 		},
 		async setClients() {
 			let response = await this.getClients();

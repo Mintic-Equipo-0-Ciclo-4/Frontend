@@ -6,8 +6,11 @@
 		<div class="table-body">
 			<div class="table-row" v-for="object of displayData" :key="object.key">
 				<div class="table-field" v-for="field of Object.values(object)" :key="field.key">{{ field }}</div>
-				<button class="delete-button" v-if="deletable" @click="ondelete(object)">
+				<button class="delete-button table-row-button" v-if="deletable" @click="ondelete(object)">
 					<img src="@/assets/img/delete.svg" class="delete-image" />
+				</button>
+				<button class="update-button table-row-button" v-if="editable" @click="onupdate(object)">
+					<img src="@/assets/img/pencil.svg" class="delete-image" />
 				</button>
 			</div>
 		</div>
@@ -40,7 +43,7 @@
 import SelectInput from "@/components/SelectInput.vue";
 
 export default {
-	props: ["data", "headers", "template", "query", "deletable", "ondelete"],
+	props: ["data", "headers", "template", "query", "deletable", "editable", "ondelete", "onupdate"],
 	data() {
 		return {
 			page: 1,
@@ -234,8 +237,9 @@ export default {
 	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(92%) contrast(0%);
 }
 
-.delete-button {
+.table-row-button {
 	position: absolute;
+
 	width: 28px;
 	height: 32px;
 
@@ -245,14 +249,19 @@ export default {
 	border: none;
 	outline: none;
 	border-radius: 4px;
-	/* box-shadow: 0px 0px 5px #333333; */
 
 	cursor: pointer;
+}
 
+.delete-button {
 	right: 10px;
 }
 
-.delete-button .delete-image {
+.update-button {
+	right: 50px;
+}
+
+.table-row-button img {
 	height: 80%;
 
 	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(80%) contrast(0%);
@@ -260,7 +269,7 @@ export default {
 	transition-duration: 200ms;
 }
 
-.delete-button:hover .delete-image {
+.table-row-button:hover img {
 	filter: invert(18%) sepia(98%) saturate(5533%) hue-rotate(267deg) brightness(81%) contrast(141%);
 }
 </style>

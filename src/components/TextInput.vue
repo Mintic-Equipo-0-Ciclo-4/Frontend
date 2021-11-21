@@ -1,7 +1,7 @@
 <template>
 	<div
 		class="text-input-div"
-		:class="{ filled, error: errors.length != 0 }"
+		:class="{ filled, error: errors.length != 0, disabled }"
 		:style="{
 			'--background': background != null ? background : '#fff',
 			'--linecolor': linecolor != null ? linecolor : '#d4d4d4',
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-	props: ["placeholder", "modelValue", "password", "email", "validate", "background", "linecolor", "color"],
+	props: ["placeholder", "modelValue", "password", "email", "validate", "background", "linecolor", "color", "disabled"],
 	computed: {
 		filled() {
 			return this.modelValue.content.length != 0;
@@ -67,6 +67,10 @@ export default {
 	margin-top: 35px;
 }
 
+.text-input-div.disabled {
+	pointer-events: none;
+}
+
 input {
 	width: 100%;
 	height: 100%;
@@ -81,6 +85,10 @@ input {
 	transition-duration: 100ms;
 
 	background-color: var(--background);
+}
+
+.text-input-div.disabled input {
+	color: var(--color);
 }
 
 .text-input-div.error input {

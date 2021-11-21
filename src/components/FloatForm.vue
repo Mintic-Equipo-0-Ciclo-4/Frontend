@@ -8,10 +8,13 @@
 					v-model="input.model"
 					:key="input.key"
 					:placeholder="input.name"
+					:email="input.email"
+					:disabled="input.disabled"
 					@update:modelValue="$emit('update:modelValue', modelValue)"
 					background="#e9e9e9"
 					linecolor="#999999"
 					color="#666666"
+					validate="true"
 				></TextInput>
 			</div>
 			<div class="buttons-div">
