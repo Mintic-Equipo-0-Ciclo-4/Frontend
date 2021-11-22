@@ -1,6 +1,16 @@
 <template>
-	<div class="select-input-main-container" @click="hidden = !hidden" :class="{ hidden }" :style="{ '--time': '300ms' }">
-		<div class="options-container" :style="{ '--height': options.length * 40 + 'px' }">
+	<div
+		class="select-input-main-container"
+		@click="hidden = !hidden"
+		:class="{ hidden }"
+		:style="{
+			'--time': '300ms',
+			'--background': background,
+			'--height': options.length * height + 'px',
+			'--option-height': height + 'px',
+		}"
+	>
+		<div class="options-container">
 			<div class="select-option" v-for="option of options" :key="option.key" @click="selection = option">
 				<h4>{{ option }}</h4>
 			</div>
@@ -12,7 +22,7 @@
 
 <script>
 export default {
-	props: ["modelValue", "options"],
+	props: ["modelValue", "options", "background", "height"],
 	data() {
 		return {
 			hidden: true,
@@ -36,6 +46,7 @@ export default {
 	align-items: center;
 
 	height: 40px;
+	height: var(--option-height);
 	width: 100%;
 
 	border-radius: 6px;
@@ -82,10 +93,11 @@ export default {
 
 .options-container {
 	position: absolute;
-	top: 41px;
-	left: 0px;
+	top: 42px;
+	top: calc(var(--option-height) + 2px);
+	left: -1px;
 
-	width: 100%;
+	width: calc(100% + 2px);
 	height: var(--height);
 	border-radius: 6px;
 
@@ -93,6 +105,10 @@ export default {
 
 	box-shadow: 0px 1px 10px #8b8b8b;
 	overflow: hidden;
+
+	z-index: 6;
+	background-color: #6600ee;
+	background-color: var(--background);
 }
 
 .select-input-main-container.hidden .options-container {
@@ -106,10 +122,13 @@ export default {
 
 	width: 100%;
 	height: 40px;
+	height: var(--option-height);
 
 	transition-duration: var(--time);
 
 	text-indent: 15px;
+
+	overflow: hidden;
 }
 
 .options-container .select-option:nth-child(1) {
