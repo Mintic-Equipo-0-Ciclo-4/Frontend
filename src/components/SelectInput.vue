@@ -15,7 +15,7 @@
 				<h4>{{ displayOptions[index] }}</h4>
 			</div>
 		</div>
-		<h4 class="selected-option">{{ displayOptions[selection] }}</h4>
+		<h4 class="selected-option">{{ displayOptions[modelValue] }}</h4>
 		<span class="triangle"></span>
 
 		<label class="placeholder" v-if="placeholder">{{ placeholder }}</label>
@@ -159,7 +159,7 @@ export default {
 	position: absolute;
 	left: 10px;
 	top: -10px;
-	background: #e6e6e6;
+	background: var(--background);
 	padding: 0px 10px;
 
 	pointer-events: none;

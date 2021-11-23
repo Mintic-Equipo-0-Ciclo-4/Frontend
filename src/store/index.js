@@ -97,6 +97,21 @@ export default createStore({
 			}
 		},
 
+		async getProducts(context, payload) {
+			const response = await fetch("/api/products", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			const body = await response.json();
+
+			if (response.ok) {
+				return { status: response.status, error: null, body };
+			} else {
+				return { status: response.status, error: response.statusText };
+			}
+		},
+
 		async uploadProducts(context, payload) {
 			const response = await fetch("/api/products", {
 				method: "POST",
@@ -175,23 +190,18 @@ export default createStore({
 			});
 		},
 
-		async getProducts(context, payload) {
-			const response = await fetch("/api/products", {
-				method: "GET",
+		async postSale(context, payload) {
+			const response = await fetch("/api/sales", {
+				method: "POST",
 				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload),
 			});
 
-			const body = await response.json();
-
 			if (response.ok) {
-				return { status: response.status, error: null, body };
+				return { status: response.status, error: null };
 			} else {
 				return { status: response.status, error: response.statusText };
 			}
-		},
-
-		async postSale(context, payload) {
-			console.log(payload);
 		},
 	},
 });

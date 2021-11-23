@@ -1,10 +1,34 @@
 <template>
 	<div class="sales-main-container" style="--template: auto 15% 33% 22%">
 		<div class="sales-header">
-			<TextInput v-model="cedula" placeholder="Cedula" class="cedula-input"></TextInput>
+			<TextInput
+				background="#e9e9e9"
+				linecolor="#999999"
+				color="#666666"
+				v-model="cedula"
+				placeholder="Cedula"
+				class="cedula-input"
+			></TextInput>
 			<RectButton content="Consultar" class="btn-consultar-cliente" @click="salesGetClient" main></RectButton>
-			<TextInput v-model="cliente" placeholder="Cliente" class="cedula-input" disabled="true"></TextInput>
-			<TextInput v-model="consecutivo" placeholder="Consecutivo" class="cedula-input" disabled="true"></TextInput>
+			<TextInput
+				background="#e9e9e9"
+				linecolor="#999999"
+				color="#666666"
+				v-model="cliente"
+				placeholder="Cliente"
+				class="cedula-input"
+				disabled="true"
+				tabindex="-1"
+			></TextInput>
+			<TextInput
+				background="#e9e9e9"
+				linecolor="#999999"
+				color="#666666"
+				v-model="consecutivo"
+				placeholder="Consecutivo"
+				class="cedula-input"
+				disabled="true"
+			></TextInput>
 		</div>
 		<div class="sales-body">
 			<div v-for="(sale, index) of sales" :key="sale.key" class="sale">
@@ -16,9 +40,20 @@
 					placeholder="Producto"
 					@update="setSaleData(index)"
 				></SelectInput>
-				<TextInput v-model="sale.codigo" placeholder="Codigo" disabled="true" class="codigo-input"></TextInput>
+				<TextInput
+					background="#e9e9e9"
+					linecolor="#999999"
+					color="#666666"
+					v-model="sale.codigo"
+					placeholder="Codigo"
+					disabled="true"
+					class="codigo-input"
+				></TextInput>
 				<div class="valores-div">
 					<TextInput
+						background="#e9e9e9"
+						linecolor="#999999"
+						color="#666666"
 						v-model="sale.valorUnitario"
 						placeholder="Valor Unitario"
 						disabled="true"
@@ -34,15 +69,48 @@
 						:disabled="sale.selection == -1"
 					/>
 				</div>
-				<TextInput v-model="sale.valorTotal" placeholder="Valor Total" disabled="true" class="valor-total-input"></TextInput>
+				<TextInput
+					background="#e9e9e9"
+					linecolor="#999999"
+					color="#666666"
+					v-model="sale.valorTotal"
+					placeholder="Valor Total"
+					disabled="true"
+					class="valor-total-input"
+				></TextInput>
 			</div>
 		</div>
 		<div class="sales-footer">
+			<RectButton class="new-sale" content="Add Product" @click="newSale"></RectButton>
 			<RectButton class="send-sale" content="Sale" @click="sendSale" main></RectButton>
 			<div class="valores-div">
-				<TextInput v-model="totalVenta" placeholder="Subtotal" disabled="true" class="valor-input"></TextInput>
-				<TextInput v-model="totalIva" placeholder="Total Iva" disabled="true" class="valor-input"></TextInput>
-				<TextInput v-model="totalConIva" placeholder="Valor Total" disabled="true" class="valor-input"></TextInput>
+				<TextInput
+					background="#e9e9e9"
+					linecolor="#999999"
+					color="#666666"
+					v-model="totalVenta"
+					placeholder="Subtotal"
+					disabled="true"
+					class="valor-input"
+				></TextInput>
+				<TextInput
+					background="#e9e9e9"
+					linecolor="#999999"
+					color="#666666"
+					v-model="totalIva"
+					placeholder="Total Iva"
+					disabled="true"
+					class="valor-input"
+				></TextInput>
+				<TextInput
+					background="#e9e9e9"
+					linecolor="#999999"
+					color="#666666"
+					v-model="totalConIva"
+					placeholder="Valor Total"
+					disabled="true"
+					class="valor-input"
+				></TextInput>
 			</div>
 		</div>
 	</div>
@@ -61,8 +129,6 @@ export default {
 			cliente: { content: "" },
 			consecutivo: { content: "" },
 			sales: [
-				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
-				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
 				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
 			],
 			totalVenta: { content: "" },
@@ -117,6 +183,14 @@ export default {
 				.toString()
 				.slice(5, -1)}`;
 		},
+		resetFields() {
+			this.cedula.content = "";
+			this.cliente.content = "";
+			this.consecutivo.content = "";
+			this.sales = [
+				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
+			];
+		},
 		async sendSale() {
 			let cedula = this.cedula.validContent;
 			let cliente = this.cliente.content;
@@ -145,7 +219,7 @@ export default {
 				totalIva: this.totalIva.content,
 				total: this.totalConIva.content,
 			};
-			let response = this.postSale(data);
+			let response = await this.postSale(data);
 
 			if (response.error) {
 				switch (response.status) {
@@ -166,8 +240,19 @@ export default {
 
 				return;
 			} else {
+				this.resetFields();
 				this.spawnNotification({ text: "Venta creada correctamente" });
 			}
+		},
+
+		newSale() {
+			this.sales.push({
+				selection: -1,
+				codigo: { content: "" },
+				valorUnitario: { content: "" },
+				cantidad: 1,
+				valorTotal: { content: "" },
+			});
 		},
 
 		...mapActions(["getClient", "getProducts", "postSale"]),
@@ -263,6 +348,14 @@ export default {
 .sales-body {
 	width: 90%;
 	max-width: 1200px;
+
+	height: 50%;
+	overflow-y: auto;
+
+	border: solid rgb(204, 204, 204);
+	border-width: 1px 0px 1px 0px;
+
+	/* padding: 20px 0px; */
 }
 
 .sale {
@@ -330,6 +423,13 @@ export default {
 	grid-column-end: 4;
 }
 
+.new-sale {
+	width: calc(100% - 34px);
+	justify-self: center;
+	align-self: flex-end;
+	grid-column: 1/3;
+}
+
 .sales-footer .valores-div {
 	justify-content: center;
 	align-content: flex-end;
@@ -339,5 +439,31 @@ export default {
 .sales-footer .valores-div .valor-input {
 	width: 90%;
 	margin-top: 27px;
+}
+
+/**Scrollbar */
+
+.sales-body::-webkit-scrollbar {
+	background-color: #fff;
+	width: 16px;
+	display: none;
+}
+
+.sales-body::-webkit-scrollbar-track {
+	background-color: #e9e9e9;
+}
+
+.sales-body::-webkit-scrollbar-thumb {
+	background-color: #babac0;
+	border-radius: 16px;
+	border: 5px solid #e9e9e9;
+}
+.sales-body::-webkit-scrollbar-thumb:hover {
+	background-color: #a0a0a5;
+	border: 4px solid #e9e9e9;
+}
+
+.sales-body::-webkit-scrollbar-button {
+	display: none;
 }
 </style>
