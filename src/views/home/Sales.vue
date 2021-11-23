@@ -31,12 +31,22 @@
 						class="cantidad-input"
 						v-model="sale.cantidad"
 						@update:modelValue="setSaleValue(index)"
+						:disabled="sale.selection == -1"
 					/>
 				</div>
 				<TextInput v-model="sale.valorTotal" placeholder="Valor Total" disabled="true" class="valor-total-input"></TextInput>
 			</div>
 		</div>
-		<div class="sales-foo"></div>
+		<div class="sales-footer">
+			<RectButton class="send-sale" content="Sale" main></RectButton>
+			<div class="valores-div">
+				<TextInput v-model="totalVenta" placeholder="Subtotal" disabled="true" class="valor-input"></TextInput>
+				<TextInput v-model="totalIva" placeholder="Total Iva" disabled="true" class="valor-input"></TextInput>
+				<TextInput v-model="totalConIva" placeholder="Valor Total" disabled="true" class="valor-input"></TextInput>
+				<!-- <TextInput placeholder="Valor Total" disabled="true" class="valor-input"></TextInput> -->
+			</div>
+			<h1 hidden>{{ totales }}</h1>
+		</div>
 	</div>
 </template>
 
@@ -64,8 +74,13 @@ export default {
 			cliente: { content: "" },
 			consecutivo: { content: "" },
 			sales: [
-				{ selection: "", codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
+				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
+				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
+				{ selection: -1, codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
 			],
+			totalVenta: { content: "" },
+			totalIva: { content: "" },
+			totalConIva: { content: "" },
 			productos: [],
 		};
 	},
@@ -79,6 +94,24 @@ export default {
 		setSaleValue(index) {
 			let producto = this.productos[this.sales[index].selection];
 			this.sales[index].valorTotal.content = producto.precioCompra * this.sales[index].cantidad;
+		},
+	},
+	computed: {
+		totales() {
+			let subtotal = 0,
+				iva = 0;
+			for (let sale of this.sales) {
+				if (sale.selection != -1) {
+					subtotal += sale.valorTotal.content;
+					iva += sale.valorTotal.content * (this.productos[sale.selection].ivaCompra / 100);
+				}
+			}
+
+			this.totalVenta.content = subtotal == 0 ? "" : subtotal;
+			this.totalIva.content = iva == 0 ? "" : iva;
+			this.totalConIva.content = subtotal + iva == 0 ? "" : subtotal + iva;
+
+			return { subtotal, iva, total: subtotal + iva };
 		},
 	},
 	components: { SelectInput, TextInput, RectButton },
@@ -173,5 +206,36 @@ export default {
 	font-family: Roboto-Bold;
 
 	color: #363636;
+}
+
+.sales-footer {
+	display: grid;
+	grid-template-columns: var(--template);
+
+	width: 90%;
+	max-width: 1200px;
+
+	height: 245px;
+	/* background-color: #b9b9b9; */
+}
+
+.send-sale {
+	justify-self: center;
+	align-self: flex-end;
+	width: 90%;
+
+	grid-column-start: 3;
+	grid-column-end: 4;
+}
+
+.sales-footer .valores-div {
+	justify-content: center;
+	align-content: flex-end;
+	flex-wrap: wrap;
+}
+
+.sales-footer .valores-div .valor-input {
+	width: 90%;
+	margin-top: 27px;
 }
 </style>
