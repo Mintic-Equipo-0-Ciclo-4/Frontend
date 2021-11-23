@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="sales-footer">
-			<RectButton class="send-sale" content="Sale" main></RectButton>
+			<RectButton class="send-sale" content="Sale" @click="sendSale" main></RectButton>
 			<div class="valores-div">
 				<TextInput v-model="totalVenta" placeholder="Subtotal" disabled="true" class="valor-input"></TextInput>
 				<TextInput v-model="totalIva" placeholder="Total Iva" disabled="true" class="valor-input"></TextInput>
@@ -75,12 +75,12 @@ export default {
 		setSaleData(index) {
 			let producto = this.productos[this.sales[index].selection];
 			this.sales[index].codigo.content = producto.codigo;
-			this.sales[index].valorUnitario.content = producto.precioCompra;
+			this.sales[index].valorUnitario.content = producto.precioVenta;
 			this.setSaleValue(index);
 		},
 		setSaleValue(index) {
 			let producto = this.productos[this.sales[index].selection];
-			this.sales[index].valorTotal.content = producto.precioCompra * this.sales[index].cantidad;
+			this.sales[index].valorTotal.content = producto.precioVenta * this.sales[index].cantidad;
 		},
 		async salesGetClient() {
 			let cedula = this.cedula.content;
@@ -96,7 +96,7 @@ export default {
 						this.$router.push("login");
 						break;
 					case 404:
-						this.cedula.errors = ["Not found"];
+						this.cedula.errors = ["Client not found"];
 						break;
 					default:
 						this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
@@ -117,8 +117,61 @@ export default {
 				.toString()
 				.slice(5, -1)}`;
 		},
+		async sendSale() {
+			let cedula = this.cedula.validContent;
+			let cliente = this.cliente.content;
+			let consecutivo = this.consecutivo.content;
+			let productos = [];
 
-		...mapActions(["getClient", "getProducts"]),
+			if (!cedula || !cliente || !consecutivo) {
+				this.cedula.errors = ["Required"];
+				return;
+			}
+
+			for (let sale of this.sales) {
+				if (sale.selection != -1) {
+					let { cantidad } = sale;
+					let temp = { cantidad, ...this.productos[sale.selection] };
+					temp.nombre = temp.name;
+					delete temp.name;
+					productos.push(temp);
+				}
+			}
+			let data = {
+				cedula,
+				consecutivo,
+				productos,
+				subtotal: this.totalVenta.content,
+				totalIva: this.totalIva.content,
+				total: this.totalConIva.content,
+			};
+			let response = this.postSale(data);
+
+			if (response.error) {
+				switch (response.status) {
+					case 400:
+						this.spawnNotification({ text: "Error de peticion 400" });
+						break;
+					case 401:
+						this.$store.state.auth = false;
+						this.$router.push("login");
+						break;
+					case 404:
+						this.spawnNotification({ text: "Error 404" });
+						break;
+					default:
+						this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
+						console.trace(response);
+				}
+
+				return;
+			} else {
+				this.spawnNotification({ text: "Venta creada correctamente" });
+			}
+		},
+
+		...mapActions(["getClient", "getProducts", "postSale"]),
+		...mapMutations(["spawnNotification"]),
 	},
 	computed: {
 		totales() {

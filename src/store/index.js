@@ -189,5 +189,9 @@ export default createStore({
 				return { status: response.status, error: response.statusText };
 			}
 		},
+
+		async postSale(context, payload) {
+			console.log(payload);
+		},
 	},
 });
