@@ -126,6 +126,20 @@ export default createStore({
 			}
 		},
 
+		async getClient(context, cedula) {
+			const response = await fetch(`/api/clients/${cedula}`, {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			if (response.ok) {
+				let body = await response.json();
+				return { status: response.status, error: null, body };
+			} else {
+				return { status: response.status, error: response.statusText };
+			}
+		},
+
 		async createClient(context, payload) {
 			const response = await fetch("/api/clients", {
 				method: "POST",
@@ -159,6 +173,21 @@ export default createStore({
 			const response = await fetch("/api/clients/" + cedula, {
 				method: "DELETE",
 			});
+		},
+
+		async getProducts(context, payload) {
+			const response = await fetch("/api/products", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			const body = await response.json();
+
+			if (response.ok) {
+				return { status: response.status, error: null, body };
+			} else {
+				return { status: response.status, error: response.statusText };
+			}
 		},
 	},
 });

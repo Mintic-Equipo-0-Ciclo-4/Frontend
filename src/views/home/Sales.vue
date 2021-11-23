@@ -2,7 +2,7 @@
 	<div class="sales-main-container" style="--template: auto 15% 33% 22%">
 		<div class="sales-header">
 			<TextInput v-model="cedula" placeholder="Cedula" class="cedula-input"></TextInput>
-			<RectButton content="Consultar" class="btn-consultar-cliente" main></RectButton>
+			<RectButton content="Consultar" class="btn-consultar-cliente" @click="salesGetClient" main></RectButton>
 			<TextInput v-model="cliente" placeholder="Cliente" class="cedula-input" disabled="true"></TextInput>
 			<TextInput v-model="consecutivo" placeholder="Consecutivo" class="cedula-input" disabled="true"></TextInput>
 		</div>
@@ -52,20 +52,9 @@
 import TextInput from "@/components/TextInput.vue";
 import RectButton from "@/components/RectButton.vue";
 import SelectInput from "@/components/SelectInput.vue";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
-	async created() {
-		let data = await fetch("/api/products", {
-			method: "GET",
-		});
-
-		let body = await data.json();
-
-		this.productos = body.map((product) => {
-			let { codigo, nombre, ivaCompra, nitProveedor, precioCompra, precioVenta } = product;
-			return { codigo, name: nombre, ivaCompra, nitProveedor, precioCompra, precioVenta };
-		});
-	},
 	data() {
 		return {
 			cedula: { content: "" },
@@ -93,6 +82,43 @@ export default {
 			let producto = this.productos[this.sales[index].selection];
 			this.sales[index].valorTotal.content = producto.precioCompra * this.sales[index].cantidad;
 		},
+		async salesGetClient() {
+			let cedula = this.cedula.content;
+			if (cedula === "") {
+				this.cedula.errors = ["Required"];
+				return;
+			}
+			let data = await this.getClient(this.cedula.content);
+			if (data.error) {
+				switch (data.status) {
+					case 401:
+						this.$store.state.auth = false;
+						this.$router.push("login");
+						break;
+					case 404:
+						this.cedula.errors = ["Not found"];
+						break;
+					default:
+						this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
+						console.trace(response);
+				}
+				this.cliente.content = "";
+				this.cedula.validContent = undefined;
+				this.consecutivo.content = "";
+
+				return;
+			}
+
+			let date = new Date();
+			this.cliente.content = data.body.nombre;
+			this.cedula.validContent = cedula;
+			this.consecutivo.content = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date
+				.getTime()
+				.toString()
+				.slice(5, -1)}`;
+		},
+
+		...mapActions(["getClient", "getProducts"]),
 	},
 	computed: {
 		totales() {
@@ -116,6 +142,28 @@ export default {
 		totales() {},
 	},
 	components: { SelectInput, TextInput, RectButton },
+	async created() {
+		let data = await this.getProducts();
+		if (data.error) {
+			switch (data.status) {
+				case 401:
+					this.$store.state.auth = false;
+					this.$router.push("login");
+					break;
+				default:
+					this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
+					console.trace(response);
+			}
+
+			return;
+		}
+		let body = data.body;
+
+		this.productos = body.map((product) => {
+			let { codigo, nombre, ivaCompra, nitProveedor, precioCompra, precioVenta } = product;
+			return { codigo, name: nombre, ivaCompra, nitProveedor, precioCompra, precioVenta };
+		});
+	},
 };
 </script>
 
