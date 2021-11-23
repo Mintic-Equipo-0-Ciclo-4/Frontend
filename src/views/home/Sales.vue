@@ -7,8 +7,15 @@
 			<TextInput v-model="consecutivo" placeholder="Consecutivo" class="cedula-input" disabled="true"></TextInput>
 		</div>
 		<div class="sales-body">
-			<div v-for="sale of sales" :key="sale.key" class="sale">
-				<SelectInput :options="productos" v-model="sale.nombre" background="#e9e9e9" height="48"></SelectInput>
+			<div v-for="(sale, index) of sales" :key="sale.key" class="sale">
+				<SelectInput
+					:options="productos"
+					v-model="sale.selection"
+					background="#e9e9e9"
+					height="50"
+					placeholder="Producto"
+					@update="setSaleData(index)"
+				></SelectInput>
 				<TextInput v-model="sale.codigo" placeholder="Codigo" disabled="true" class="codigo-input"></TextInput>
 				<div class="valores-div">
 					<TextInput
@@ -17,11 +24,19 @@
 						disabled="true"
 						class="valor-unitario-input"
 					></TextInput>
-					<div class="cantidad-input"></div>
+					<input
+						type="number"
+						min="1"
+						max="100"
+						class="cantidad-input"
+						v-model="sale.cantidad"
+						@update:modelValue="setSaleValue(index)"
+					/>
 				</div>
 				<TextInput v-model="sale.valorTotal" placeholder="Valor Total" disabled="true" class="valor-total-input"></TextInput>
 			</div>
 		</div>
+		<div class="sales-foo"></div>
 	</div>
 </template>
 
@@ -39,8 +54,8 @@ export default {
 		let body = await data.json();
 
 		this.productos = body.map((product) => {
-			console.log();
-			return product.nombre;
+			let { codigo, nombre, ivaCompra, nitProveedor, precioCompra, precioVenta } = product;
+			return { codigo, name: nombre, ivaCompra, nitProveedor, precioCompra, precioVenta };
 		});
 	},
 	data() {
@@ -48,9 +63,23 @@ export default {
 			cedula: { content: "" },
 			cliente: { content: "" },
 			consecutivo: { content: "" },
-			sales: [{ nombre: "", codigo: { content: "" }, valorUnitario: { content: "" }, valorTotal: { content: "" } }],
+			sales: [
+				{ selection: "", codigo: { content: "" }, valorUnitario: { content: "" }, cantidad: 1, valorTotal: { content: "" } },
+			],
 			productos: [],
 		};
+	},
+	methods: {
+		setSaleData(index) {
+			let producto = this.productos[this.sales[index].selection];
+			this.sales[index].codigo.content = producto.codigo;
+			this.sales[index].valorUnitario.content = producto.precioCompra;
+			this.setSaleValue(index);
+		},
+		setSaleValue(index) {
+			let producto = this.productos[this.sales[index].selection];
+			this.sales[index].valorTotal.content = producto.precioCompra * this.sales[index].cantidad;
+		},
 	},
 	components: { SelectInput, TextInput, RectButton },
 };
@@ -131,9 +160,18 @@ export default {
 }
 
 .cantidad-input {
-	width: 95px;
-	height: 50px;
+	height: 48px;
+	width: 75px;
 
-	background-color: white;
+	background-color: transparent;
+	border: solid 1px #686868;
+	border-radius: 6px;
+	outline: none;
+
+	text-align: center;
+	font-size: 18px;
+	font-family: Roboto-Bold;
+
+	color: #363636;
 }
 </style>

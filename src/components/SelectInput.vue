@@ -11,27 +11,39 @@
 		}"
 	>
 		<div class="options-container">
-			<div class="select-option" v-for="option of options" :key="option.key" @click="selection = option">
-				<h4>{{ option }}</h4>
+			<div class="select-option" v-for="(option, index) of options" :key="option.key" @click="selection = index">
+				<h4>{{ displayOptions[index] }}</h4>
 			</div>
 		</div>
-		<h4 class="selected-option">{{ selection }}</h4>
+		<h4 class="selected-option">{{ displayOptions[selection] }}</h4>
 		<span class="triangle"></span>
+
+		<label class="placeholder" v-if="placeholder">{{ placeholder }}</label>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ["modelValue", "options", "background", "height"],
+	props: ["modelValue", "options", "background", "height", "placeholder"],
 	data() {
 		return {
 			hidden: true,
-			selection: this.options[0],
+			selection: -1,
 		};
+	},
+	computed: {
+		displayOptions() {
+			if (typeof this.options[0] === "string") return this.options;
+			else
+				return this.options.map((option) => {
+					return option.name;
+				});
+		},
 	},
 	watch: {
 		selection() {
 			this.$emit("update:modelValue", this.selection);
+			this.$emit("update");
 		},
 	},
 };
@@ -141,5 +153,21 @@ export default {
 
 .options-container .select-option:hover {
 	background-color: #dfdfdf;
+}
+
+.select-input-main-container .placeholder {
+	position: absolute;
+	left: 10px;
+	top: -10px;
+	background: #e6e6e6;
+	padding: 0px 10px;
+
+	pointer-events: none;
+	font-size: 15px;
+	color: #6600ee;
+}
+
+.select-input-main-container.hidden .placeholder {
+	color: #5f5f5f;
 }
 </style>
