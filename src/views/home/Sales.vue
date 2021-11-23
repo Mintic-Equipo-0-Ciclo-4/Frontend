@@ -43,9 +43,7 @@
 				<TextInput v-model="totalVenta" placeholder="Subtotal" disabled="true" class="valor-input"></TextInput>
 				<TextInput v-model="totalIva" placeholder="Total Iva" disabled="true" class="valor-input"></TextInput>
 				<TextInput v-model="totalConIva" placeholder="Valor Total" disabled="true" class="valor-input"></TextInput>
-				<!-- <TextInput placeholder="Valor Total" disabled="true" class="valor-input"></TextInput> -->
 			</div>
-			<h1 hidden>{{ totales }}</h1>
 		</div>
 	</div>
 </template>
@@ -113,6 +111,9 @@ export default {
 
 			return { subtotal, iva, total: subtotal + iva };
 		},
+	},
+	watch: {
+		totales() {},
 	},
 	components: { SelectInput, TextInput, RectButton },
 };
