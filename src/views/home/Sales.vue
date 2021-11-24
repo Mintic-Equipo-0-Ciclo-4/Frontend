@@ -270,7 +270,7 @@ export default {
 			}
 
 			this.totalVenta.content = subtotal == 0 ? "" : subtotal;
-			this.totalIva.content = iva == 0 ? "" : iva;
+			this.totalIva.content = iva == 0 ? "" : iva.toFixed(2);
 			this.totalConIva.content = subtotal + iva == 0 ? "" : subtotal + iva;
 
 			return { subtotal, iva, total: subtotal + iva };
@@ -388,7 +388,7 @@ export default {
 }
 
 .cantidad-input {
-	height: 48px;
+	height: 50px;
 	width: 75px;
 
 	background-color: transparent;

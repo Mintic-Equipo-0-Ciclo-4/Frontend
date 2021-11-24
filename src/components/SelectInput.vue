@@ -6,8 +6,9 @@
 		:style="{
 			'--time': '300ms',
 			'--background': background,
-			'--height': options.length * height + 'px',
+			'--height': Math.min(options.length, 4) * height + 'px',
 			'--option-height': height + 'px',
+			'--scroll': options.length <= 4 ? 'hidden' : 'auto',
 		}"
 	>
 		<div class="options-container">
@@ -73,6 +74,7 @@ export default {
 
 .selected-option {
 	margin-left: 15px;
+	text-transform: capitalize;
 }
 
 .select-input-main-container.hidden {
@@ -98,7 +100,7 @@ export default {
 	border-bottom: 6px #6600ee solid;
 	border-left: 6px transparent solid;
 
-	transition-duration: 300ms;
+	transition-duration: var(--time);
 
 	transform: rotate(0deg) translateY(-6px);
 }
@@ -110,13 +112,15 @@ export default {
 	left: -1px;
 
 	width: calc(100% + 2px);
-	height: var(--height);
+	height: calc(var(--height) + 1px);
+	max-height: calc(var(--option-height) * 4);
 	border-radius: 6px;
 
 	transition-duration: var(--time);
 
 	box-shadow: 0px 1px 10px #8b8b8b;
-	overflow: hidden;
+	overflow-y: hidden;
+	overflow-y: var(--scroll);
 
 	z-index: 6;
 	background-color: #6600ee;
@@ -139,6 +143,7 @@ export default {
 	transition-duration: var(--time);
 
 	text-indent: 15px;
+	text-transform: capitalize;
 
 	overflow: hidden;
 }
@@ -169,5 +174,34 @@ export default {
 
 .select-input-main-container.hidden .placeholder {
 	color: #5f5f5f;
+}
+
+/**Scrollbar */
+
+.options-container::-webkit-scrollbar {
+	background-color: #fff;
+	width: 14px;
+
+	border-radius: 6px;
+}
+
+.options-container::-webkit-scrollbar-track {
+	background-color: #e9e9e9;
+	border-radius: 6px;
+}
+
+.options-container::-webkit-scrollbar-thumb {
+	background-color: #babac0;
+	border-radius: 16px;
+	border: 5px solid #e9e9e9;
+}
+.options-container::-webkit-scrollbar-thumb:hover {
+	background-color: #a0a0a5;
+	border: 4px solid #e9e9e9;
+}
+
+.options-container::-webkit-scrollbar-button {
+	display: none;
+	border-radius: 6px;
 }
 </style>
