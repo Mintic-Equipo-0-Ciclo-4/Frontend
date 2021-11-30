@@ -263,7 +263,7 @@ export default {
 	border-radius: 4px;
 
 	cursor: pointer;
-	margin-right: 8px;
+	margin-right: 10px;
 }
 
 .table-row-button img {
