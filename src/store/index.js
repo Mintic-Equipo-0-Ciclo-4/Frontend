@@ -204,6 +204,20 @@ export default createStore({
 			}
 		},
 
+		async getSales(context, payload) {
+			const response = await fetch(`/api/sales/`, {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			if (response.ok) {
+				let body = await response.json();
+				return { status: response.status, body, error: null };
+			} else {
+				return { status: response.status, error: response.statusText };
+			}
+		},
+
 		async getClientSales(context, cedula) {
 			const response = await fetch(`/api/sales/client/${cedula}`, {
 				method: "GET",

@@ -6,7 +6,7 @@
 			<Table
 				:data="tableData"
 				:headers="tableHeaders"
-				detailed="true"
+				:detailed="true"
 				:ondetail="showDetails"
 				template="15% 15% 10% 12% 12% 14% 22%"
 			></Table>
@@ -30,13 +30,15 @@ export default {
 	},
 	components: { Table, SearchBar },
 	methods: {
-		...mapActions(["getClients", "getClientSales"]),
+		...mapActions(["getClients", "getClientSales", "getSales"]),
 		...mapMutations(["spawnNotification"]),
 		showDetails(client) {
 			if (client.ventasTotales <= 0) {
 				this.spawnNotification({ text: "El cliente no ha realizado compras aun." });
 				return;
 			}
+
+			this.$router.push("/reports/sales/" + client.cedula);
 		},
 	},
 	async created() {
@@ -55,10 +57,12 @@ export default {
 		}
 
 		let clients = response.body;
+		let rawSales = (await this.getSales()).body;
 
 		let sales = [];
 		for (let client of clients) {
-			let sale = (await this.getClientSales(client.cedula)).body;
+			// let sale = (await this.getClientSales(client.cedula)).body;
+			let sale = rawSales.filter((value) => value.cedula == client.cedula);
 			let temp = sale.map((value) => {
 				let { cedula, consecutivo, productos, subtotal, totalIva, total } = value;
 				return { cedula, consecutivo, productos, subtotal, totalIva, total };
