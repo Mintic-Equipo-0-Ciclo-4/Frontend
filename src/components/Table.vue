@@ -6,12 +6,17 @@
 		<div class="table-body">
 			<div class="table-row" v-for="object of displayData" :key="object.key">
 				<div class="table-field" v-for="field of Object.values(object)" :key="field.key">{{ field }}</div>
-				<button class="delete-button table-row-button" v-if="deletable" @click="ondelete(object)">
-					<img src="@/assets/img/delete.svg" class="delete-image" />
-				</button>
-				<button class="update-button table-row-button" v-if="editable" @click="onupdate(object)">
-					<img src="@/assets/img/pencil.svg" class="delete-image" />
-				</button>
+				<div class="options-row-div">
+					<button class="update-button table-row-button" v-if="detailed" @click="ondetail(object)">
+						<img src="@/assets/img/eye.svg" class="delete-image" />
+					</button>
+					<button class="update-button table-row-button" v-if="editable" @click="onupdate(object)">
+						<img src="@/assets/img/pencil.svg" class="delete-image" />
+					</button>
+					<button class="delete-button table-row-button" v-if="deletable" @click="ondelete(object)">
+						<img src="@/assets/img/delete.svg" class="delete-image" />
+					</button>
+				</div>
 			</div>
 		</div>
 		<div class="table-options-div">
@@ -43,7 +48,7 @@
 import SelectInput from "@/components/SelectInput.vue";
 
 export default {
-	props: ["data", "headers", "template", "query", "deletable", "editable", "ondelete", "onupdate"],
+	props: ["data", "headers", "template", "query", "deletable", "editable", "detailed", "ondelete", "onupdate", "ondetail"],
 	data() {
 		return {
 			page: 1,
@@ -148,6 +153,13 @@ export default {
 	border-width: 0px 0px 1px 0px;
 }
 
+.options-row-div {
+	position: absolute;
+	display: flex;
+
+	right: 0px;
+}
+
 .table-row:hover {
 	background-color: #e2e2e2;
 }
@@ -238,7 +250,7 @@ export default {
 }
 
 .table-row-button {
-	position: absolute;
+	/* position: absolute; */
 
 	width: 28px;
 	height: 32px;
@@ -251,14 +263,7 @@ export default {
 	border-radius: 4px;
 
 	cursor: pointer;
-}
-
-.delete-button {
-	right: 10px;
-}
-
-.update-button {
-	right: 50px;
+	margin-right: 8px;
 }
 
 .table-row-button img {
