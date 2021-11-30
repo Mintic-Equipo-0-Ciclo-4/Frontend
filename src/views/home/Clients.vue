@@ -125,6 +125,20 @@ export default {
 			let response = await this.getClients();
 			let clients = response.body;
 
+			if (response.error) {
+				switch (response.status) {
+					case 401:
+						this.$store.state.auth = false;
+						this.$router.push("login");
+						break;
+					default:
+						this.spawnNotification({ text: "Error interno del servidor. Revisar el trace de errores" });
+						console.trace(response);
+				}
+
+				return;
+			}
+
 			this.tableData = clients.map((value) => {
 				let { cedula, nombre, telefono, email, direccion } = value;
 				return { cedula, nombre, telefono, email, direccion };

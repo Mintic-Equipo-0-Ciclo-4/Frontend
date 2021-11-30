@@ -22,10 +22,33 @@
 				<img src="@/assets/img/sales.svg" alt="" />
 				<h1>Sales</h1>
 			</router-link>
-			<router-link class="navbar-link" to="/reports" @click="if (isMobile) modelValue = false;">
-				<img src="@/assets/img/reports.svg" alt="" />
-				<h1>Reports</h1>
-			</router-link>
+			<div
+				class="reports-menu"
+				:class="{
+					showing: !reportMenuHidden,
+					highlight: $route.name.includes('Report') && reportMenuHidden,
+				}"
+			>
+				<div class="drop-menu-header navbar-link" @click="reportMenuHidden = !reportMenuHidden">
+					<img src="@/assets/img/reports.svg" alt="" />
+					<h1>Reports</h1>
+					<span class="triangle"></span>
+				</div>
+				<div class="drop-menu-body">
+					<router-link class="navbar-link" to="/reports/clients" @click="if (isMobile) modelValue = false;">
+						<img src="@/assets/img/clients.svg" alt="" />
+						<h1>Clients</h1>
+					</router-link>
+					<router-link class="navbar-link" to="/reports/products" @click="if (isMobile) modelValue = false;">
+						<img src="@/assets/img/report-products.svg" alt="" />
+						<h1>Products</h1>
+					</router-link>
+					<router-link class="navbar-link" to="/reports/sales" @click="if (isMobile) modelValue = false;">
+						<img src="@/assets/img/report-sales.svg" alt="" />
+						<h1>Sales</h1>
+					</router-link>
+				</div>
+			</div>
 
 			<!-- <DropMenu :items="reportsItems" parentRoute="reports"></DropMenu> -->
 		</div>
@@ -72,23 +95,7 @@ export default {
 	props: ["modelValue"],
 	data() {
 		return {
-			reportsItems: [
-				{
-					name: "Productos",
-					route: "reports/test",
-					image: "info",
-				},
-				{
-					name: "Clientes",
-					route: "reports/test",
-					image: "info",
-				},
-				{
-					name: "Usuarios",
-					route: "reports/test",
-					image: "info",
-				},
-			],
+			reportMenuHidden: true,
 		};
 	},
 	computed: {
@@ -227,6 +234,71 @@ export default {
 
 	width: 100%;
 	height: 200px;
+}
+
+.reports-menu {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	justify-self: right;
+	width: 100%;
+	overflow: hidden;
+}
+
+.reports-menu.highlight .drop-menu-header {
+	color: #6600eb;
+	background-color: #ece0fd;
+}
+
+.reports-menu.highlight .drop-menu-header img {
+	filter: invert(10%) sepia(100%) saturate(6960%) hue-rotate(268deg) brightness(72%) contrast(121%);
+}
+
+.reports-menu.highlight .drop-menu-header .triangle {
+	border-bottom: 6px #6600eb solid;
+}
+
+.reports-menu .drop-menu-header {
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+}
+
+.reports-menu .drop-menu-header .triangle {
+	position: absolute;
+
+	right: 10px;
+	top: 18px;
+
+	width: 0px;
+	height: 0px;
+
+	/* border-top: 6px #6600ee solid; */
+	border-top: 6px transparent solid;
+	border-right: 6px transparent solid;
+	border-bottom: 6px #454545 solid;
+	border-left: 6px transparent solid;
+
+	transition-duration: 300ms;
+
+	transform: rotate(180deg) translateY(-6px);
+}
+
+.reports-menu.showing .drop-menu-header .triangle {
+	transform: rotate(0deg) translateY(0px);
+}
+
+.reports-menu .drop-menu-body {
+	width: 100%;
+	height: 0px;
+	transition-duration: 200ms;
+}
+.reports-menu .drop-menu-body .navbar-link {
+	margin-left: 35px;
+	width: calc(100% - 45px);
+}
+.reports-menu.showing .drop-menu-body {
+	height: 170px;
 }
 
 @media screen and (min-width: 813px) {

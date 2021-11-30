@@ -89,7 +89,7 @@ export default {
 
 .triangle {
 	width: 0px;
-	height: 0 px;
+	height: 0px;
 
 	margin-right: 9px;
 	margin-top: 8px;
