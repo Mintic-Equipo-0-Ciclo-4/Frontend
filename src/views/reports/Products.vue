@@ -45,7 +45,14 @@ export default {
 
 		this.tableData = response.body.map((product) => {
 			let { codigo, ivaCompra, nitProveedor, nombre, precioCompra, precioVenta } = product;
-			return { codigo, nombre, nitProveedor, ivaCompra, precioCompra, precioVenta };
+			return {
+				codigo,
+				nombre,
+				nitProveedor,
+				ivaCompra: ivaCompra + "%",
+				precioCompra: Intl.NumberFormat("en-US").format(precioCompra) + " $",
+				precioVenta: Intl.NumberFormat("en-US").format(precioVenta) + " $",
+			};
 		});
 
 		this.tableHeaders = ["codigo", "nombre", "nit proveedor", "iva compra", "precio compra", "precio venta"];

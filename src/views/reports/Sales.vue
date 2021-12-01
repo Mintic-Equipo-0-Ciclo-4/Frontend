@@ -93,8 +93,8 @@ export default {
 			return {
 				cedula,
 				nombre,
-				ivaPagado: Intl.NumberFormat("en-US").format(ivaPagado) + "$",
-				totalPagado: Intl.NumberFormat("en-US").format(totalPagado) + "$",
+				ivaPagado: Intl.NumberFormat("en-US").format(ivaPagado) + " $",
+				totalPagado: Intl.NumberFormat("en-US").format(totalPagado) + " $",
 				ventasTotales,
 				primeraCompra,
 				ultimaCompra,
