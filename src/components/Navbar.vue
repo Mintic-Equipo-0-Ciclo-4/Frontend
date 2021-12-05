@@ -62,7 +62,7 @@
 				<img src="@/assets/img/info.svg" alt="" />
 				<h1>About</h1>
 			</a>
-			<a class="navbar-link" href="login" @click="closeSession">
+			<a class="navbar-link" href="/login" @click="closeSession">
 				<img src="@/assets/img/logout.svg" alt="" />
 				<h1>Logout</h1>
 			</a>

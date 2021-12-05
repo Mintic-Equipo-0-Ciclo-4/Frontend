@@ -62,7 +62,7 @@ export default {
 	height: var(--option-height);
 	width: 100%;
 
-	border-radius: 6px;
+	border-radius: 4px;
 	outline: 2px #6600ee solid;
 
 	cursor: pointer;

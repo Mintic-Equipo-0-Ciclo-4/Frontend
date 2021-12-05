@@ -178,7 +178,7 @@ export default {
 			let date = new Date();
 			this.cliente.content = data.body.nombre;
 			this.cedula.validContent = cedula;
-			this.consecutivo.content = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date
+			this.consecutivo.content = `${date.getFullYear()}-${date.getMonth() + 1}-${("0" + date.getDate()).slice(-2)}-${date
 				.getTime()
 				.toString()
 				.slice(5, -1)}`;

@@ -12,7 +12,7 @@
 					<h4>C {{ sale.consecutivo }}</h4>
 				</div>
 
-				<Table :data="sale.productos" :headers="Object.keys(sale.productos[0])" class="sale-table"></Table>
+				<Table :data="sale.productos" :headers="tableHeaders" class="sale-table"></Table>
 				<div class="valores-div">
 					<h1><span>Subtotal: </span>{{ sale.subtotal }}</h1>
 					<h1><span>Total Iva:</span> {{ sale.totalIva }}</h1>
@@ -30,7 +30,7 @@ import { mapActions } from "vuex";
 export default {
 	components: { Table },
 	data() {
-		return { sales: [], client: {} };
+		return { sales: [], client: {}, tableHeaders: [] };
 	},
 	methods: {
 		...mapActions(["getClient", "getClientSales"]),
@@ -80,6 +80,8 @@ export default {
 				totalIva: Intl.NumberFormat("en-US").format(totalIva) + " $",
 			};
 		});
+
+		this.tableHeaders = ["nombre", "codigo", "cantidad", "nit proveedor", "iva compra", "precio compra", "precio venta"];
 
 		// let temp = { "2021-01": [1, 2, 3], "2021-02": [4, 5, 6], "2021-04": [7, 12, 316], "2021-08": [10, 221, 3154] };
 
@@ -147,7 +149,8 @@ export default {
 .sale-div {
 	display: grid;
 	grid-template-rows: 50px 400px 50px;
-	margin-top: 30px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 
 	/* padding: 20px;
 	box-shadow: 0px 0px 20px #adadad; */
