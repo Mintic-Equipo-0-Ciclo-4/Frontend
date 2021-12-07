@@ -6,6 +6,7 @@
 		:style="{
 			'--time': '300ms',
 			'--background': background,
+			'--border': border,
 			'--height': Math.min(options.length, 4) * height + 'px',
 			'--option-height': height + 'px',
 			'--scroll': options.length <= 4 ? 'hidden' : 'auto',
@@ -25,7 +26,7 @@
 
 <script>
 export default {
-	props: ["modelValue", "options", "background", "height", "placeholder"],
+	props: ["modelValue", "options", "background", "border", "height", "placeholder"],
 	data() {
 		return {
 			hidden: true,
@@ -79,6 +80,7 @@ export default {
 
 .select-input-main-container.hidden {
 	outline: 1px #999999 solid;
+	outline: 1px var(--border) solid;
 }
 
 .select-input-main-container.hidden .triangle {

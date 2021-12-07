@@ -8,6 +8,15 @@
 			<TextInput v-model="email" placeholder="Email" email validate></TextInput>
 			<TextInput v-model="username" placeholder="Username"></TextInput>
 			<TextInput v-model="password" placeholder="Password" password validate></TextInput>
+			<SelectInput
+				v-model="sucursal"
+				:options="sucursales"
+				height="50"
+				placeholder="Sucursal"
+				class="sucursal-input"
+				background="#fff"
+				border="#d0d0d0"
+			></SelectInput>
 		</div>
 
 		<div id="buttons-div">
@@ -20,6 +29,7 @@
 <script>
 import RectButton from "@/components/RectButton.vue";
 import TextInput from "@/components/TextInput.vue";
+import SelectInput from "@/components/SelectInput.vue";
 import { mapActions, mapMutations } from "vuex";
 
 export default {
@@ -30,12 +40,11 @@ export default {
 			email: { content: "" },
 			username: { content: "" },
 			password: { content: "" },
+			sucursal: "0",
+			sucursales: ["Bogota", "Cali", "Medellin"],
 		};
 	},
-	components: {
-		RectButton,
-		TextInput,
-	},
+	components: { RectButton, TextInput, SelectInput },
 	methods: {
 		...mapActions(["createUser"]),
 		...mapMutations(["spawnNotification"]),
@@ -70,6 +79,7 @@ export default {
 				email: this.email.content,
 				username: this.username.content,
 				password: this.password.content,
+				sucursal: this.sucursales[this.sucursal],
 			});
 			if (res.error) {
 				switch (res.status) {
@@ -91,7 +101,7 @@ export default {
 <style scoped>
 #main-container {
 	display: grid;
-	grid-template-rows: 80px 460px 140px;
+	grid-template-rows: 80px 540px 140px;
 
 	width: 100%;
 	max-width: 800px;
@@ -125,9 +135,14 @@ export default {
 	justify-content: center;
 }
 
+.sucursal-input {
+	margin-top: 35px;
+	width: 80%;
+}
+
 @media screen and (min-width: 800px) {
 	#main-container {
-		height: 700px;
+		height: 780px;
 		width: 600px;
 
 		box-shadow: 0px 0px 15px #c0c0c0;

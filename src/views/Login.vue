@@ -26,10 +26,7 @@ export default {
 			password: { content: "" },
 		};
 	},
-	components: {
-		RectButton,
-		TextInput,
-	},
+	components: { RectButton, TextInput },
 	methods: {
 		...mapActions(["loginUser", "getUserData"]),
 		async loginAuthUser() {

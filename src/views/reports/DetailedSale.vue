@@ -9,7 +9,7 @@
 			</div>
 			<div class="sale-div" v-for="sale of sales" :key="sale.value">
 				<div class="consecutivo-div">
-					<h4>C {{ sale.consecutivo }}</h4>
+					<h4>C {{ sale.consecutivo }} - {{ sale.sucursal }}</h4>
 				</div>
 
 				<Table :data="sale.productos" :headers="tableHeaders" class="sale-table"></Table>
@@ -59,7 +59,7 @@ export default {
 
 		let sales = (await this.getClientSales(cedula)).body;
 		this.sales = sales.map((value) => {
-			let { consecutivo, productos, subtotal, total, totalIva } = value;
+			let { consecutivo, productos, subtotal, total, totalIva, sucursal } = value;
 			let __productos = productos.map((producto) => {
 				let { nombre, codigo, cantidad, nitProveedor, ivaCompra, precioCompra, precioVenta } = producto;
 				return {
@@ -78,6 +78,7 @@ export default {
 				subtotal: Intl.NumberFormat("en-US").format(subtotal) + " $",
 				total: Intl.NumberFormat("en-US").format(total) + " $",
 				totalIva: Intl.NumberFormat("en-US").format(totalIva) + " $",
+				sucursal,
 			};
 		});
 

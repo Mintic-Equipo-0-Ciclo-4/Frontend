@@ -36,6 +36,7 @@
 					:options="productos"
 					v-model="sale.selection"
 					background="#e9e9e9"
+					border="#a0a0a0"
 					height="50"
 					placeholder="Producto"
 					@update="setSaleData(index)"
